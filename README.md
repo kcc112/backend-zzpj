@@ -8,4 +8,4 @@
 - [Jędrzej Dobrucki 216748](https://github.com/dobrucki)
 - [Szymon Dobrowolski 216747](https://github.com/szm33)
 
-## [backend-zzpj](https://github.com/kcc112/frontend-zzpj)
+## [frontend-zzpj](https://github.com/kcc112/frontend-zzpj)
