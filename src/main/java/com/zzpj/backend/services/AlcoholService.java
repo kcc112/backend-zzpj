@@ -1,0 +1,45 @@
+package com.zzpj.backend.services;
+
+import com.zzpj.backend.entities.Alcohol;
+import com.zzpj.backend.repositories.AlcoholRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.UUID;
+
+@Service
+public class AlcoholService implements AlcoholServiceLocal {
+
+   private AlcoholRepository alcoholRepository;
+
+   @Autowired
+    public AlcoholService(AlcoholRepository alcoholRepository) {
+        this.alcoholRepository = alcoholRepository;
+    }
+
+    @Override
+    public void addAlcohol(Alcohol alcohol) {
+        alcoholRepository.save(alcohol);
+    }
+
+    @Override
+    public Alcohol getAlcohol(UUID id) {
+        return alcoholRepository.getOne(id);
+    }
+
+    @Override
+    public List<Alcohol> getAllAlcohols() {
+        return alcoholRepository.findAll();
+    }
+
+    @Override
+    public void deleteAlcohol(UUID id) {
+        alcoholRepository.deleteById(id);
+    }
+
+    @Override
+    public void editAlcohol(Alcohol alcohol) {
+        alcoholRepository.save(alcohol);
+    }
+}
