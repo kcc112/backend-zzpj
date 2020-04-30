@@ -1,17 +1,17 @@
 package com.zzpj.backend.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import java.util.List;
-import java.util.UUID;
+
 
 @Entity
 public class User {
 
     @Id
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @Column(unique = true)
     private String login;
     @Column
@@ -19,13 +19,14 @@ public class User {
     @Column(updatable = false)
     private String type;
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Purchase> purchases;
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -1,14 +1,19 @@
 package com.zzpj.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.Min;
-import java.util.UUID;
+import java.io.Serializable;
+import java.util.List;
+
 
 @Entity
-public class Alcohol {
+public class Alcohol implements Serializable {
 
     @Id
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @Column(unique = true)
     private String name;
     @Column
@@ -17,12 +22,24 @@ public class Alcohol {
     @Column
     @Min(0)
     private int amount;
+//    @ManyToMany(mappedBy = "alcohols")
+//    private List<Purchase> purchases;
+//
+//
+//    public List<Purchase> getPurchases() {
+//        return purchases;
+//    }
+//
+//    public void setPurchases(List<Purchase> purchases) {
+//        this.purchases = purchases;
+//    }
 
-    public UUID getId() {
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

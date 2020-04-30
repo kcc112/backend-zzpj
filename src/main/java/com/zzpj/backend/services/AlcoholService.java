@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
+
 
 @Service
 public class AlcoholService implements AlcoholServiceLocal {
@@ -24,8 +24,8 @@ public class AlcoholService implements AlcoholServiceLocal {
     }
 
     @Override
-    public Alcohol getAlcohol(UUID id) {
-        return alcoholRepository.getOne(id);
+    public Alcohol getAlcohol(Long id) {
+        return alcoholRepository.findById(id).get();
     }
 
     @Override
@@ -34,12 +34,12 @@ public class AlcoholService implements AlcoholServiceLocal {
     }
 
     @Override
-    public void deleteAlcohol(UUID id) {
+    public void deleteAlcohol(Long id) {
         alcoholRepository.deleteById(id);
     }
 
     @Override
     public void editAlcohol(Alcohol alcohol) {
-        alcoholRepository.save(alcohol);
+       alcoholRepository.save(alcohol);
     }
 }
