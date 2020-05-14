@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -24,8 +25,8 @@ public class AlcoholService implements AlcoholServiceLocal {
     }
 
     @Override
-    public Alcohol getAlcohol(Long id) {
-        return alcoholRepository.findById(id).get();
+    public Optional<Alcohol> getAlcohol(Long id) {
+        return alcoholRepository.findById(id);
     }
 
     @Override

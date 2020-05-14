@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -26,7 +27,11 @@ public class AlcoholController {
 
     @GetMapping("{id}")
     public Alcohol get(@PathVariable Long id){
-        return alcoholService.getAlcohol(id);
+        Optional<Alcohol> alcohol = alcoholService.getAlcohol(id);
+        if(alcohol.isPresent()){
+            return alcohol.get();
+        }
+        return new Alcohol();
     }
 
     @PostMapping
