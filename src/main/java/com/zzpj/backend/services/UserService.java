@@ -4,10 +4,12 @@ import com.zzpj.backend.entities.User;
 import com.zzpj.backend.repositories.UserRepository;
 import com.zzpj.backend.utils.HashUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class UserService implements UserServiceLocal {
 
     private UserRepository userRepository;
