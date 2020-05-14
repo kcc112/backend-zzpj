@@ -1,1 +1,1 @@
-INSERT INTO alcohol (id,name,cost,amount) VALUES (1,'Tatra', 2, 10);
+INSERT INTO alcohol (name,cost,amount) VALUES ('Tatra', 2, 10);
