@@ -41,6 +41,8 @@ public class AlcoholService implements AlcoholServiceLocal {
 
     @Override
     public void editAlcohol(Alcohol alcohol) {
-       alcoholRepository.save(alcohol);
+       if(alcoholRepository.findById(alcohol.getId()).isPresent()){
+           alcoholRepository.save(alcohol);
+       }
     }
 }
