@@ -1,0 +1,1 @@
+INSERT INTO alcohol (name,cost,amount) VALUES ('Tatra', 2, 10);
