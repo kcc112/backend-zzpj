@@ -14,7 +14,7 @@ public class Purchase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToMany(mappedBy = "purchaseList")
+    @OneToMany(mappedBy = "purchase")
     @JsonIgnore
     private List<PurchaseList> purchaseLists = new ArrayList<>();
     @ManyToOne
