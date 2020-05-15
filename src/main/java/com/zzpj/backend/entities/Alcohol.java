@@ -27,5 +27,5 @@ public class Alcohol implements Serializable {
     private int amount;
     @OneToMany(mappedBy = "alcohol")
     @JsonIgnore
-    private List<PurchaseAlcohol> purchaseAlcohols = new ArrayList<>();
+    private List<PurchaseList> purchaseLists = new ArrayList<>();
 }

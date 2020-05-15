@@ -4,24 +4,22 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
-
 
 @Entity
 @Data
-public class User {
+public class Purchase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true)
-    private String login;
-    @Column
-    private String password;
-    @Column(updatable = false)
-    private String type;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "purchaseList")
     @JsonIgnore
-    private List<Purchase> purchases;
+    private List<PurchaseList> purchaseLists = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JsonIgnore
+    private User user;
 
 }
