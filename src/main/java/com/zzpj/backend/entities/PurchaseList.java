@@ -1,5 +1,6 @@
 package com.zzpj.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -16,6 +17,7 @@ public class PurchaseList {
     private Alcohol alcohol;
     @ManyToOne
     @JoinColumn(name = "purchase_id", referencedColumnName = "id")
+    @JsonIgnore
     private Purchase purchase;
     @Column(name = "buy_amount")
     private int buyAmount;

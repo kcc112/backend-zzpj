@@ -14,12 +14,12 @@ public class Purchase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToMany(mappedBy = "purchase")
-    @JsonIgnore
+    @OneToMany(mappedBy = "purchase", cascade = CascadeType.ALL)
+//    @JsonIgnore
     private List<PurchaseList> purchaseLists = new ArrayList<>();
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @JsonIgnore
+//    @JsonIgnore
     private User user;
 
 }
