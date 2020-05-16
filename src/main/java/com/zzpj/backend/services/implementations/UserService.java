@@ -1,7 +1,8 @@
-package com.zzpj.backend.services;
+package com.zzpj.backend.services.implementations;
 
 import com.zzpj.backend.entities.User;
 import com.zzpj.backend.repositories.UserRepository;
+import com.zzpj.backend.services.interfaceses.UserServiceLocal;
 import com.zzpj.backend.utils.HashUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -5,10 +5,8 @@ import lombok.Data;
 
 import javax.persistence.*;
 
-@Entity(name ="purchase_list")
-import java.util.ArrayList;
-import java.util.List;
 
+@Entity(name ="purchase_list")
 @Data
 public class PurchaseList {
 

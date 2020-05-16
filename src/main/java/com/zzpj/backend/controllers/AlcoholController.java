@@ -1,7 +1,7 @@
 package com.zzpj.backend.controllers;
 
 import com.zzpj.backend.entities.Alcohol;
-import com.zzpj.backend.services.AlcoholServiceLocal;
+import com.zzpj.backend.services.interfaceses.AlcoholServiceLocal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,7 +47,7 @@ public class AlcoholController {
     }
 
     @DeleteMapping("{id}")
-    public String del(@PathVariable Long id){
+    public String delete(@PathVariable Long id){
         alcoholService.deleteAlcohol(id);
         return "Success";
     }

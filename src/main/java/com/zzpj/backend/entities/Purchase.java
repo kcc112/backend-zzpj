@@ -15,11 +15,9 @@ public class Purchase {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToMany(mappedBy = "purchase", cascade = CascadeType.ALL)
-//    @JsonIgnore
     private List<PurchaseList> purchaseLists = new ArrayList<>();
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-//    @JsonIgnore
     private User user;
 
 }

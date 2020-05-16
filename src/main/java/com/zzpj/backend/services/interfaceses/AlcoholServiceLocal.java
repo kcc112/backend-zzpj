@@ -1,4 +1,4 @@
-package com.zzpj.backend.services;
+package com.zzpj.backend.services.interfaceses;
 
 import com.zzpj.backend.entities.Alcohol;
 

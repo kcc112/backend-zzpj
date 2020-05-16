@@ -1,7 +1,7 @@
 package com.zzpj.backend.controllers;
 
 import com.zzpj.backend.entities.Purchase;
-import com.zzpj.backend.services.PurchaseServiceLocal;
+import com.zzpj.backend.services.interfaceses.PurchaseServiceLocal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

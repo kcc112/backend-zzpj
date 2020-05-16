@@ -1,7 +1,7 @@
 package com.zzpj.backend.controllers;
 
 import com.zzpj.backend.entities.User;
-import com.zzpj.backend.services.UserServiceLocal;
+import com.zzpj.backend.services.interfaceses.UserServiceLocal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,7 +46,7 @@ public class UserController {
     }
 
     @DeleteMapping("{id}")
-    public String del(@PathVariable Long id){
+    public String delete(@PathVariable Long id){
         userService.deleteUser(id);
         return "Success";
     }
