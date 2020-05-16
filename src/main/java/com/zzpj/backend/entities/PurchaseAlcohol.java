@@ -1,16 +1,12 @@
 package com.zzpj.backend.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
 
-@Entity(name ="purchase_list")
-import java.util.ArrayList;
-import java.util.List;
-
+@Entity
 @Data
-public class PurchaseList {
+public class PurchaseAlcohol {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,9 +15,8 @@ public class PurchaseList {
     @JoinColumn(name = "alcohol_id", referencedColumnName = "id")
     private Alcohol alcohol;
     @ManyToOne
-    @JoinColumn(name = "purchase_id", referencedColumnName = "id")
-    @JsonIgnore
-    private Purchase purchase;
+    @JoinColumn(name = "purchase_list_id", referencedColumnName = "id")
+    private PurchaseList purchaseList;
     @Column(name = "buy_amount")
     private int buyAmount;
 }
