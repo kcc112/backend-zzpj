@@ -22,6 +22,6 @@ public class User {
     private String type;
     @OneToMany(mappedBy = "user")
     @JsonIgnore
-    private List<PurchaseList> purchaseLists;
+    private List<Purchase> purchases;
 
 }

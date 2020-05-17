@@ -1,7 +1,8 @@
-package com.zzpj.backend.services;
+package com.zzpj.backend.services.implementations;
 
 import com.zzpj.backend.entities.Alcohol;
 import com.zzpj.backend.repositories.AlcoholRepository;
+import com.zzpj.backend.services.interfaceses.AlcoholServiceLocal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
