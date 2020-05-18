@@ -1,4 +1,4 @@
-package com.zzpj.backend.controllers;
+package com.zzpj.backend.api.v1;
 
 import com.zzpj.backend.entities.User;
 import com.zzpj.backend.services.interfaceses.UserServiceLocal;
