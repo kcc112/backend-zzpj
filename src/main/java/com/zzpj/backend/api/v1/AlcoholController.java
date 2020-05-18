@@ -10,7 +10,7 @@ import java.util.Optional;
 
 
 @RestController
-@RequestMapping("/alcohols")
+@RequestMapping("/api/v1/alcohols")
 public class AlcoholController {
 
     private AlcoholServiceLocal alcoholService;
@@ -28,10 +28,7 @@ public class AlcoholController {
     @GetMapping("{id}")
     public Alcohol get(@PathVariable Long id){
         Optional<Alcohol> alcohol = alcoholService.getAlcohol(id);
-        if(alcohol.isPresent()){
-            return alcohol.get();
-        }
-        return new Alcohol();
+        return alcohol.orElseGet(Alcohol::new);
     }
 
     @PostMapping

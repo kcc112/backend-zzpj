@@ -1,6 +1,7 @@
 package com.zzpj.backend.utils;
 
 
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 
 public class HashUtils {
@@ -8,8 +9,8 @@ public class HashUtils {
     public static String sha256(String base) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = digest.digest(base.getBytes("UTF-8"));
-            StringBuffer hexString = new StringBuffer();
+            byte[] hash = digest.digest(base.getBytes(StandardCharsets.UTF_8));
+            StringBuilder hexString = new StringBuilder();
 
             for (int i = 0; i < hash.length; i++) {
                 String hex = Integer.toHexString(0xff & hash[i]);
