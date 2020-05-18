@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zzpj-backend
+spec:
+  selector:
+    matchLabels:
+      app: zzpj-backend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: zzpj-backend
+    spec:
+      containers:
+        - name: zzpj-backend
+          image: kcc112/zzpj:latest
+          ports:
+            - containerPort: 8080
