@@ -1,4 +1,4 @@
-package com.zzpj.backend.controllers;
+package com.zzpj.backend.api.v1;
 
 import com.zzpj.backend.entities.Purchase;
 import com.zzpj.backend.services.interfaceses.PurchaseServiceLocal;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("purchases")
+@RequestMapping("/api/v1/purchases")
 public class PurchaseController {
 
     private PurchaseServiceLocal purchaseService;

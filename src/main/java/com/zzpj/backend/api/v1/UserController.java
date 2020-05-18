@@ -1,4 +1,4 @@
-package com.zzpj.backend.controllers;
+package com.zzpj.backend.api.v1;
 
 import com.zzpj.backend.entities.User;
 import com.zzpj.backend.services.interfaceses.UserServiceLocal;
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("users")
+@RequestMapping("/api/v1/users")
 public class UserController {
 
     private UserServiceLocal userService;
@@ -27,10 +27,7 @@ public class UserController {
     @GetMapping("{id}")
     public User get(@PathVariable Long id){
         Optional<User> user = userService.getUser(id);
-        if(user.isPresent()){
-            return user.get();
-        }
-        return new User();
+        return user.orElseGet(User::new);
     }
 
     @PostMapping

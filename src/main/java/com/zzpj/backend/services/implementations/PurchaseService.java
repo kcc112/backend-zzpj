@@ -22,8 +22,8 @@ public class PurchaseService implements PurchaseServiceLocal {
 
    @Autowired
     public PurchaseService(PurchaseRepository purchaseRepository, PurchaseListRepository purchaseListRepository, AlcoholRepository alcoholRepository) {
-        this.purchaseRepository = purchaseRepository;
-        this.purchaseListRepository = purchaseListRepository;
+       this.purchaseRepository = purchaseRepository;
+       this.purchaseListRepository = purchaseListRepository;
        this.alcoholRepository = alcoholRepository;
    }
 
