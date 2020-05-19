@@ -29,7 +29,7 @@ public class PurchaseControllerTest {
     private ObjectMapper objectMapper;
 
     @MockBean
-    PurchaseServiceLocal purchaseServiceLocal;
+    PurchaseServiceLocal purchaseService;
 
 
     @Test
@@ -39,7 +39,7 @@ public class PurchaseControllerTest {
     }
 
     @Test
-    void getAll_whenValidInput_thenReturnsAlcoholList() throws Exception {
+    void getAll_whenValidInput_thenReturnsPurchaseList() throws Exception {
         MvcResult mvcResult = mockMvc.perform(get("/api/v1/purchases")).andReturn();
 
         ArrayList<Alcohol> expectedResponseBody = new ArrayList<>();
