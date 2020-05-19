@@ -3,6 +3,8 @@ package com.zzpj.backend.services.implementations;
 import com.zzpj.backend.entities.Alcohol;
 import com.zzpj.backend.repositories.AlcoholRepository;
 import com.zzpj.backend.services.interfaceses.AlcoholServiceLocal;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,7 @@ import java.util.Optional;
 public class AlcoholService implements AlcoholServiceLocal {
 
    private AlcoholRepository alcoholRepository;
+   private final static Logger LOGGER = LogManager.getLogger(AlcoholService.class);
 
    @Autowired
     public AlcoholService(AlcoholRepository alcoholRepository) {
@@ -32,7 +35,7 @@ public class AlcoholService implements AlcoholServiceLocal {
 
     @Override
     public List<Alcohol> getAllAlcohols() {
-        return alcoholRepository.findAll();
+       return alcoholRepository.findAll();
     }
 
     @Override
