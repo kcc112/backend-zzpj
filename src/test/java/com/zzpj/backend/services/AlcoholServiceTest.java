@@ -26,11 +26,6 @@ public class AlcoholServiceTest {
     @InjectMocks
     private AlcoholService alcoholService;
 
-    @Before
-    public void init() {
-        MockitoAnnotations.initMocks(this);
-    }
-
     @Test
     public void testAddAlcohol() {
         Alcohol alcohol1 = new Alcohol();
