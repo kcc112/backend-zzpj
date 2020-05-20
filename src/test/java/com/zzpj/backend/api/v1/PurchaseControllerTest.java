@@ -4,7 +4,6 @@ package com.zzpj.backend.api.v1;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zzpj.backend.entities.Alcohol;
 import com.zzpj.backend.entities.Purchase;
-import com.zzpj.backend.entities.PurchaseList;
 import com.zzpj.backend.entities.User;
 import com.zzpj.backend.services.interfaceses.PurchaseServiceLocal;
 import org.junit.jupiter.api.Test;
