@@ -3,6 +3,7 @@ package com.zzpj.backend.api.v1;
 import com.zzpj.backend.entities.User;
 import com.zzpj.backend.services.interfaceses.UserServiceLocal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,20 +32,32 @@ public class UserController {
     }
 
     @PostMapping
-    public String add(@RequestBody User user){
+    public HttpStatus add(@RequestBody User user){
+        try {
         userService.addUser(user);
-        return "Success";
+    } catch (Exception e) {
+        return HttpStatus.INTERNAL_SERVER_ERROR;
+    }
+        return HttpStatus.CREATED;
     }
 
     @PutMapping
-    public String edit(@RequestBody User user){
-        userService.editUser(user);
-        return "Success";
+    public HttpStatus edit(@RequestBody User user){
+        try {
+            userService.editUser(user);
+    } catch (Exception e) {
+        return HttpStatus.NOT_MODIFIED;
+    }
+        return HttpStatus.OK;
     }
 
     @DeleteMapping("{id}")
-    public String delete(@PathVariable Long id){
-        userService.deleteUser(id);
-        return "Success";
+    public HttpStatus delete(@PathVariable Long id){
+       try {
+           userService.deleteUser(id);
+    } catch (Exception e) {
+        return HttpStatus.INTERNAL_SERVER_ERROR;
+    }
+        return HttpStatus.OK;
     }
 }

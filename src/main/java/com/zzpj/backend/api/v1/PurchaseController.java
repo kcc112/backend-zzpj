@@ -3,6 +3,7 @@ package com.zzpj.backend.api.v1;
 import com.zzpj.backend.entities.Purchase;
 import com.zzpj.backend.services.interfaceses.PurchaseServiceLocal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,8 +25,12 @@ public class PurchaseController {
     }
 
     @PostMapping()
-    public String add(@RequestBody Purchase purchase){
+    public HttpStatus add(@RequestBody Purchase purchase){
+      try {
         purchaseService.addPurchase(purchase);
-        return "Success";
+    } catch (Exception e) {
+        return HttpStatus.INTERNAL_SERVER_ERROR;
+    }
+        return HttpStatus.CREATED;
     }
 }
