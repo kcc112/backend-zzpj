@@ -4,8 +4,7 @@ install: true
 addons:
   sonarcloud:
     organization: "kcc112"
-    token:
-      secure: "$SONAR_TOKEN"
+    token: ${SONAR_TOKEN}
 jdk:
   - oraclejdk11
 script:
