@@ -4,7 +4,6 @@ import com.zzpj.backend.entities.Alcohol;
 import com.zzpj.backend.entities.Purchase;
 import com.zzpj.backend.entities.PurchaseList;
 import com.zzpj.backend.repositories.AlcoholRepository;
-import com.zzpj.backend.repositories.PurchaseListRepository;
 import com.zzpj.backend.repositories.PurchaseRepository;
 import com.zzpj.backend.services.interfaceses.PurchaseServiceLocal;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +16,11 @@ import java.util.Optional;
 public class PurchaseService implements PurchaseServiceLocal {
 
    private PurchaseRepository purchaseRepository;
-   private PurchaseListRepository purchaseListRepository;
    private AlcoholRepository alcoholRepository;
 
    @Autowired
-    public PurchaseService(PurchaseRepository purchaseRepository, PurchaseListRepository purchaseListRepository, AlcoholRepository alcoholRepository) {
+    public PurchaseService(PurchaseRepository purchaseRepository, AlcoholRepository alcoholRepository) {
        this.purchaseRepository = purchaseRepository;
-       this.purchaseListRepository = purchaseListRepository;
        this.alcoholRepository = alcoholRepository;
    }
 
