@@ -1,2 +1,16 @@
 language: java
-jdk: oraclejdk11
+sudo: false
+install: true
+addons:
+  sonarcloud:
+    organization: "kcc112"
+    token:
+      secure: "$SONAR_TOKEN"
+jdk:
+  - oraclejdk11
+script:
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
+cache:
+  directories:
+    - '$HOME/.m2/repository'
+    - '$HOME/.sonar/cache'

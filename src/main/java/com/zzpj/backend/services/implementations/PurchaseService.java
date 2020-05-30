@@ -34,10 +34,9 @@ public class PurchaseService implements PurchaseServiceLocal {
 
     @Override
     public void addPurchase(Purchase purchase) {
-        for(PurchaseList purchaseList: purchase.getPurchaseLists()
-            ){
+        for(PurchaseList purchaseList: purchase.getPurchaseLists()){
             Optional<Alcohol> alcohol = alcoholRepository.findById(purchaseList.getAlcohol().getId());
-            if(alcohol.isPresent() && purchaseList.getBuyAmount() <= alcohol.get().getAmount()){
+            if (alcohol.isPresent() && purchaseList.getBuyAmount() <= alcohol.get().getAmount()){
                 alcohol.get().setAmount(alcohol.get().getAmount() - purchaseList.getBuyAmount());
                 purchaseList.setPurchase(purchase);
             }
