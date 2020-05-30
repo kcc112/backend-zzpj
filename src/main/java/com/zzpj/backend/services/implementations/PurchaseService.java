@@ -6,6 +6,7 @@ import com.zzpj.backend.entities.PurchaseList;
 import com.zzpj.backend.repositories.AlcoholRepository;
 import com.zzpj.backend.repositories.PurchaseListRepository;
 import com.zzpj.backend.repositories.PurchaseRepository;
+import com.zzpj.backend.repositories.UserRepository;
 import com.zzpj.backend.services.interfaceses.PurchaseServiceLocal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ public class PurchaseService implements PurchaseServiceLocal {
 
    private PurchaseRepository purchaseRepository;
    private PurchaseListRepository purchaseListRepository;
+    private UserRepository userRepository;
    private AlcoholRepository alcoholRepository;
 
    @Autowired
