@@ -60,7 +60,6 @@ public class PurchaseServiceTest {
     @Test
     public void addPurchase() {
         Alcohol alcohol1 = new Alcohol();
-        alcohol1.setAmount(100);
         alcohol1.setId(1L);
         Purchase purchase1 = new Purchase();
         purchase1.setId(1L);
@@ -78,7 +77,7 @@ public class PurchaseServiceTest {
 
         Mockito.verify(alcoholRepository, Mockito.times(1)).findById(1L);
         Mockito.verify(purchaseRepository, Mockito.times(1)).save(purchase1);
-        Assertions.assertEquals(50, alcohol1.getAmount());
+        Assertions.assertEquals(50, alcohol1.getWarehouse().getAmount());
 
     }
 }

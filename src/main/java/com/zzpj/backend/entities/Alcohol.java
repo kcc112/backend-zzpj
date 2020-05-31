@@ -22,10 +22,10 @@ public class Alcohol implements Serializable {
     @Column
     @Min(0)
     private double cost;
-    @Column
-    @Min(0)
-    private int amount;
     @OneToMany(mappedBy = "alcohol")
     @JsonIgnore
     private List<PurchaseList> purchaseLists = new ArrayList<>();
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "warehouse_id", referencedColumnName = "id")
+    private Warehouse warehouse;
 }
