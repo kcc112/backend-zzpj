@@ -1,9 +1,6 @@
 package com.zzpj.backend.services;
 
-import com.zzpj.backend.entities.Alcohol;
-import com.zzpj.backend.entities.Purchase;
-import com.zzpj.backend.entities.PurchaseList;
-import com.zzpj.backend.entities.User;
+import com.zzpj.backend.entities.*;
 import com.zzpj.backend.repositories.AlcoholRepository;
 import com.zzpj.backend.repositories.PurchaseListRepository;
 import com.zzpj.backend.repositories.PurchaseRepository;
@@ -59,8 +56,11 @@ public class PurchaseServiceTest {
 
     @Test
     public void addPurchase() {
+        Warehouse warehouse1 = new Warehouse();
+        warehouse1.setAmount(100);
         Alcohol alcohol1 = new Alcohol();
         alcohol1.setId(1L);
+        alcohol1.setWarehouse(warehouse1);
         Purchase purchase1 = new Purchase();
         purchase1.setId(1L);
         PurchaseList purchaseList1 = new PurchaseList();
