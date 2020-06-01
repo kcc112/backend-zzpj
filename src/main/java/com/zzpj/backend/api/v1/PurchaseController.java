@@ -24,7 +24,7 @@ public class PurchaseController {
     }
 
     @PostMapping()
-    public String add(@RequestBody Purchase purchase){
+    public String add(@RequestBody Purchase purchase) {
         purchaseService.addPurchase(purchase);
         return "Success";
     }
