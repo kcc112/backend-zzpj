@@ -1,4 +1,4 @@
-# Alcohols
+# Alcohol
 
 ## Show alcohol
 
@@ -22,9 +22,18 @@ id        | string | true      | Id of the alcohol (in Long format)
 
 Response body:
 
-
+```
+{
+    "id": 1,
+    "name": "Tatra",
+    "cost": 2.0,
+    "amount": 10
+}
+```
 
 #### 404 Not Found
+
+Response body:
 
 ```
 { }
@@ -37,14 +46,6 @@ Fetch list of alcohols
 ### HTTP Request
 
 `GET /api/v1/alcohols`
-
-### Parameters
-
-JSON parameters:
-
-Parameter                | Type    | Required? | Description
------------              |:------: | :-------: | :---------:
------------              | ------  |  -------  |  ---------
 
 ### Responses
 
@@ -69,7 +70,7 @@ Response body:
 ]
 ```
 
-## Update person record
+## Update alcohol
 
 Update a alcohol record
 
@@ -87,4 +88,45 @@ id              | string  | true      | Id of the alcohol (in Long format)
 name            | string  | false     | Alcohol name
 cost            | double  | false     | Alcohol cost
 amount          | int     | false     | Alcohol amount
+
+### Responses
+
+#### 200 OK
+
+#### 404 Not Found
+
+Response body:
+
+```
+{ }
+```
+
+## Delete alcohol
+
+Delete a alcohol record
+
+### HTTP Request
+
+`DELETE /api/v1/alcohols/{id}`
+
+### Parameters
+
+Path parameters:
+
+Parameter       | Type    | Required? | Description
+----------------|:-------:| :-------: | :---------:
+id              | string  | true      | Id of the alcohol (in Long format)
+
+
+### Responses
+
+#### 200 OK
+
+#### 404 Not Found
+
+Response body:
+
+```
+{ }
+```
 
