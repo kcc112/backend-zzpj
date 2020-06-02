@@ -27,41 +27,41 @@ public class UserController {
     }
 
     @GetMapping("{id}")
-    public User get(@PathVariable Long id) {
+    public ResponseEntity<User> get(@PathVariable Long id) {
         Optional<User> user = userService.getUser(id);
-        return user.orElseGet(User::new);
+        return new ResponseEntity<>(user.orElseGet(User::new), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity add(@RequestBody User user) {
+    public ResponseEntity<String> add(@RequestBody User user) {
         try {
             if(user.getId() != null && user.getId() < 0) throw new Exception();
             userService.addUser(user);
         } catch (Exception e) {
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity edit(@RequestBody User user) {
+    public ResponseEntity<String> edit(@RequestBody User user) {
         try {
             if(user.getId() != null && user.getId() < 0) throw new Exception();
             userService.editUser(user);
         } catch (Exception e) {
-            return new ResponseEntity(HttpStatus.NOT_MODIFIED);
+            return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
         }
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity delete(@PathVariable Long id) {
+    public ResponseEntity<String> delete(@PathVariable Long id) {
         try {
             if(id < 0) throw new Exception();
             userService.deleteUser(id);
         } catch (Exception e) {
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

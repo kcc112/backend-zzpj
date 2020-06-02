@@ -1,6 +1,7 @@
 package com.zzpj.backend.api.v1;
 
 import com.zzpj.backend.entities.Purchase;
+import com.zzpj.backend.exceptions.AppBaseException;
 import com.zzpj.backend.services.interfaceses.PurchaseServiceLocal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,18 +22,18 @@ public class PurchaseController {
     }
 
     @GetMapping
-    public List<Purchase> get(){
-        return purchaseService.getAllPurchases();
+    public ResponseEntity<List<Purchase>> get(){
+        return new ResponseEntity<>(purchaseService.getAllPurchases(), HttpStatus.OK);
     }
 
     @PostMapping()
-    public ResponseEntity add(@RequestBody Purchase purchase){
+    public ResponseEntity<String> add(@RequestBody Purchase purchase){
       try {
-          if(purchase.getId() != null && purchase.getId() < 0) throw new Exception();
+          if(purchase.getId() != null && purchase.getId() < 0) throw new AppBaseException();
           purchaseService.addPurchase(purchase);
-    } catch (Exception e) {
-        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+    } catch (AppBaseException e) {
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
-        return new ResponseEntity(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }
