@@ -4,6 +4,7 @@ import com.zzpj.backend.entities.Alcohol;
 import com.zzpj.backend.services.interfaceses.AlcoholServiceLocal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,33 +34,36 @@ public class AlcoholController {
     }
 
     @PostMapping
-    public HttpStatus add(@RequestBody Alcohol alcohol) {
+    public ResponseEntity add(@RequestBody Alcohol alcohol) {
         try {
+            if(alcohol.getName() == null) throw  new Exception();
             alcoholService.addAlcohol(alcohol);
         } catch (Exception e) {
-            return HttpStatus.INTERNAL_SERVER_ERROR;
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return HttpStatus.CREATED;
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 
     @PutMapping
-    public HttpStatus edit(@RequestBody Alcohol alcohol) {
+    public ResponseEntity edit(@RequestBody Alcohol alcohol) {
         try {
+            if(alcohol.getId() != null && alcohol.getId() < 0) throw new Exception();
             alcoholService.editAlcohol(alcohol);
         } catch (Exception e) {
-            return HttpStatus.NOT_MODIFIED;
+            return new ResponseEntity(HttpStatus.NOT_MODIFIED);
         }
-        return HttpStatus.OK;
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")
-    public HttpStatus delete(@PathVariable Long id) {
+    public ResponseEntity delete(@PathVariable Long id) {
         try {
+            if(id < 0) throw new Exception();
             alcoholService.deleteAlcohol(id);
         } catch (Exception e) {
-            return HttpStatus.INTERNAL_SERVER_ERROR;
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return HttpStatus.OK;
+        return new ResponseEntity(HttpStatus.OK);
     }
 
 
