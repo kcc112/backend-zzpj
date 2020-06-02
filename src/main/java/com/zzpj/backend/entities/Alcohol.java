@@ -5,14 +5,13 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 
 @Entity
 @Data
-public class Alcohol implements Serializable {
+public class Alcohol {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

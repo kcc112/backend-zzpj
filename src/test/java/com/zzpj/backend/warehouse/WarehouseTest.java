@@ -7,10 +7,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class WarehouseTest {
+class WarehouseTest {
 
     @Test
-    public void warehouseClassTest(){
+    void warehouseClassTest(){
         Warehouse warehouse = new Warehouse();
         Alcohol alcohol = new Alcohol();
         alcohol.setName("Piwo");
