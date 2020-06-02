@@ -64,7 +64,7 @@ public class UserControllerTest {
     }
 
     @Test
-    void add_whenValidInput_thenReturns200 () throws Exception {
+    void add_whenValidInput_thenReturns201 () throws Exception {
         User user = new User();
         user.setLogin("Miro");
         user.setPassword("kfshdkfsdjgbsjbgjb5r43y52tr673476");
@@ -72,7 +72,17 @@ public class UserControllerTest {
         mockMvc.perform(post("/api/v1/users")
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(user))
-        ).andExpect(status().isOk());
+        ).andExpect(status().isCreated());
+    }
+
+    @Test
+    void add_whenInValidInput_thenReturns500 () throws Exception {
+        User user = new User();
+        user.setId(-1l);
+        mockMvc.perform(post("/api/v1/users")
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(user))
+        ).andExpect(status().isInternalServerError());
     }
 
     @Test
@@ -88,9 +98,28 @@ public class UserControllerTest {
     }
 
     @Test
+    void edit_whenInValidInput_thenReturns304 () throws Exception {
+        User user = new User();
+        user.setId(-1l);
+        user.setLogin("Miro");
+        user.setPassword("kfshdkfsdjgbsjbgjb5r43y52tr673476");
+        user.setType("ADMIN");
+        mockMvc.perform(put("/api/v1/users")
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(user))
+        ).andExpect(status().isNotModified());
+    }
+
+    @Test
     void delete_whenValidInput_thenReturns200 () throws Exception {
         mockMvc.perform(delete("/api/v1/users/1")).
                 andExpect(status().isOk());
+    }
+
+    @Test
+    void delete_whenInValidInput_thenReturns500 () throws Exception {
+        mockMvc.perform(delete("/api/v1/users/-1")).
+                andExpect(status().isInternalServerError());
     }
 
 }

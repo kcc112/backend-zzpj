@@ -49,14 +49,26 @@ public class PurchaseControllerTest {
     }
 
     @Test
-    void add_whenValidInput_thenReturns200 () throws Exception {
+    void add_whenValidInput_thenReturns201 () throws Exception {
         Purchase purchase = new Purchase();
         purchase.setUser(new User());
         purchase.setPurchaseLists(new ArrayList<>());
         mockMvc.perform(post("/api/v1/purchases")
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(purchase))
-        ).andExpect(status().isOk());
+        ).andExpect(status().isCreated());
+    }
+
+    @Test
+    void add_whenInValidInput_thenReturns500 () throws Exception {
+        Purchase purchase = new Purchase();
+        purchase.setId(-1l);
+        purchase.setUser(new User());
+        purchase.setPurchaseLists(new ArrayList<>());
+        mockMvc.perform(post("/api/v1/purchases")
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(purchase))
+        ).andExpect(status().isInternalServerError());
     }
 
 }

@@ -63,7 +63,7 @@ public class AlcoholControllerTest {
     }
 
     @Test
-    void add_whenValidInput_thenReturns200 () throws Exception {
+    void add_whenValidInput_thenReturns201 () throws Exception {
         Alcohol alcohol = new Alcohol();
         alcohol.setName("Perla");
         alcohol.setAmount(20);
@@ -71,7 +71,19 @@ public class AlcoholControllerTest {
         mockMvc.perform(post("/api/v1/alcohols")
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(alcohol))
-        ).andExpect(status().isOk());
+        ).andExpect(status().isCreated());
+    }
+
+    @Test
+    void add_whenInValidInput_thenReturns500 () throws Exception {
+        Alcohol alcohol = new Alcohol();
+        alcohol.setName(null);
+        alcohol.setAmount(20);
+        alcohol.setCost(2.5);
+        mockMvc.perform(post("/api/v1/alcohols")
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(alcohol))
+        ).andExpect(status().isInternalServerError());
     }
 
     @Test
@@ -87,9 +99,24 @@ public class AlcoholControllerTest {
     }
 
     @Test
+    void edit_whenInValidInput_thenReturns304 () throws Exception {
+        Alcohol alcohol = new Alcohol();
+        alcohol.setId(-1l);
+        mockMvc.perform(put("/api/v1/alcohols")
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(alcohol))
+        ).andExpect(status().isNotModified());
+    }
+
+    @Test
     void delete_whenValidInput_thenReturns200 () throws Exception {
         mockMvc.perform(delete("/api/v1/alcohols/1")).
                 andExpect(status().isOk());
+    }
+    @Test
+    void delete_whenInValidInput_thenReturns500 () throws Exception {
+        mockMvc.perform(delete("/api/v1/alcohols/-1")).
+                andExpect(status().isInternalServerError());
     }
 
 
