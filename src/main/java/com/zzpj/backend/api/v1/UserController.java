@@ -1,6 +1,7 @@
 package com.zzpj.backend.api.v1;
 
 import com.zzpj.backend.entities.User;
+import com.zzpj.backend.exceptions.AppBaseException;
 import com.zzpj.backend.services.interfaceses.UserServiceLocal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,9 +36,9 @@ public class UserController {
     @PostMapping
     public ResponseEntity<String> add(@RequestBody User user) {
         try {
-            if(user.getId() != null && user.getId() < 0) throw new Exception();
+            if(user.getId() != null && user.getId() < 0) throw new AppBaseException();
             userService.addUser(user);
-        } catch (Exception e) {
+        } catch (AppBaseException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -46,9 +47,9 @@ public class UserController {
     @PutMapping
     public ResponseEntity<String> edit(@RequestBody User user) {
         try {
-            if(user.getId() != null && user.getId() < 0) throw new Exception();
+            if(user.getId() != null && user.getId() < 0) throw new AppBaseException();
             userService.editUser(user);
-        } catch (Exception e) {
+        } catch (AppBaseException e) {
             return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
         }
         return new ResponseEntity<>(HttpStatus.OK);
@@ -57,9 +58,9 @@ public class UserController {
     @DeleteMapping("{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
         try {
-            if(id < 0) throw new Exception();
+            if(id < 0) throw new AppBaseException();
             userService.deleteUser(id);
-        } catch (Exception e) {
+        } catch (AppBaseException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(HttpStatus.OK);
