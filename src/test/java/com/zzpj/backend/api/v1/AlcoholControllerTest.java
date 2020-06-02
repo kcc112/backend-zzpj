@@ -2,6 +2,7 @@ package com.zzpj.backend.api.v1;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zzpj.backend.entities.Alcohol;
+import com.zzpj.backend.entities.Warehouse;
 import com.zzpj.backend.services.interfaceses.AlcoholServiceLocal;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +66,9 @@ public class AlcoholControllerTest {
     @Test
     void add_whenValidInput_thenReturns201 () throws Exception {
         Alcohol alcohol = new Alcohol();
+        Warehouse warehouse = new Warehouse();
+        warehouse.setAmount(20);
+        alcohol.setWarehouse(warehouse);
         alcohol.setName("Perla");
         alcohol.setCost(2.5);
         mockMvc.perform(post("/api/v1/alcohols")
@@ -76,8 +80,10 @@ public class AlcoholControllerTest {
     @Test
     void add_whenInValidInput_thenReturns500 () throws Exception {
         Alcohol alcohol = new Alcohol();
+        Warehouse warehouse = new Warehouse();
+        warehouse.setAmount(20);
+        alcohol.setWarehouse(warehouse);
         alcohol.setName(null);
-        alcohol.setAmount(20);
         alcohol.setCost(2.5);
         mockMvc.perform(post("/api/v1/alcohols")
                 .contentType("application/json")
