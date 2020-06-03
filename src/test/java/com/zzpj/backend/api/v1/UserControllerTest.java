@@ -68,7 +68,6 @@ public class UserControllerTest {
         User user = new User();
         user.setLogin("Miro");
         user.setPassword("kfshdkfsdjgbsjbgjb5r43y52tr673476");
-        user.setType("ADMIN");
         mockMvc.perform(post("/api/v1/users")
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(user))
@@ -80,7 +79,6 @@ public class UserControllerTest {
         User user = new User();
         user.setLogin("Miro");
         user.setPassword("kfshdkfsdjgbsjbgjb5r43y52tr673476");
-        user.setType("ADMIN");
         mockMvc.perform(put("/api/v1/users")
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(user))

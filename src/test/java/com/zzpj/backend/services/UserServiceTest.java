@@ -30,7 +30,6 @@ public class UserServiceTest {
         User user1 = new User();
         user1.setPassword("123");
         user1.setLogin("test1");
-        user1.setType("CLIENT");
         user1.setId(1L);
 
         Mockito.when(userRepository.save(user1)).thenReturn(user1);
@@ -45,7 +44,6 @@ public class UserServiceTest {
         User user1 = new User();
         user1.setPassword("123");
         user1.setLogin("test1");
-        user1.setType("CLIENT");
         user1.setId(1L);
 
         Mockito.when(userRepository.findById(1L)).thenReturn(Optional.of(user1));
@@ -61,12 +59,10 @@ public class UserServiceTest {
         User user1 = new User();
         user1.setPassword("123");
         user1.setLogin("test1");
-        user1.setType("CLIENT");
         user1.setId(1L);
         User user2 = new User();
         user2.setPassword("456");
         user2.setLogin("test2");
-        user2.setType("CLIENT");
         user2.setId(2L);
         List<User> users = new ArrayList<>();
         users.add(user1);
@@ -85,7 +81,6 @@ public class UserServiceTest {
         User user1 = new User();
         user1.setPassword("123");
         user1.setLogin("test1");
-        user1.setType("CLIENT");
         user1.setId(1L);
 
         Mockito.doNothing().when(userRepository).deleteById(1L);
@@ -100,12 +95,10 @@ public class UserServiceTest {
         User user1 = new User();
         user1.setPassword("123");
         user1.setLogin("test1");
-        user1.setType("CLIENT");
         user1.setId(1L);
         User user2 = new User();
         user2.setPassword("456");
         user2.setLogin("test2");
-        user2.setType("CLIENT");
         user2.setId(1L);
 
         Mockito.when(userRepository.findById(1L)).thenReturn(Optional.of(user1));
@@ -117,7 +110,6 @@ public class UserServiceTest {
         Mockito.verify(userRepository, Mockito.times(1)).save(user1);
         Assertions.assertEquals(user2.getLogin(), user1.getLogin());
         Assertions.assertEquals(user2.getId(), user1.getId());
-        Assertions.assertEquals(user2.getType(), user1.getType());
         Assertions.assertEquals(HashUtils.sha256(user2.getPassword()), user1.getPassword());
     }
 }

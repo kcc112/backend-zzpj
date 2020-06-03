@@ -36,7 +36,6 @@ public class PurchaseServiceTest {
     public void getAllPurchases() {
         User user1 = new User();
         user1.setId(1L);
-        user1.setType("KLIENT");
         user1.setLogin("test1");
         user1.setPassword("123");
         Purchase purchase1 = new Purchase();

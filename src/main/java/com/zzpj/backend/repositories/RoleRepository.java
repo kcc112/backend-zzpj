@@ -1,10 +1,10 @@
 package com.zzpj.backend.repositories;
 
-import com.zzpj.backend.entities.User;
+import com.zzpj.backend.entities.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
-    User findByLogin(String email);
+public interface RoleRepository extends JpaRepository<Role, Long> {
+    Role findByName(String name);
 }

@@ -1,12 +1,17 @@
 package com.zzpj.backend.services.implementations;
 
+import com.zzpj.backend.DTOs.UserDto;
 import com.zzpj.backend.entities.User;
+import com.zzpj.backend.exceptions.UserException;
+import com.zzpj.backend.repositories.RoleRepository;
 import com.zzpj.backend.repositories.UserRepository;
 import com.zzpj.backend.services.interfaceses.UserServiceLocal;
 import com.zzpj.backend.utils.HashUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +19,8 @@ import java.util.Optional;
 public class UserService implements UserServiceLocal {
 
     private UserRepository userRepository;
+
+    private RoleRepository roleRepository;
 
     @Autowired
     public UserService(UserRepository userRepository) {
@@ -47,8 +54,26 @@ public class UserService implements UserServiceLocal {
         if(userDB.isPresent()){
             userDB.get().setLogin(user.getLogin());
             userDB.get().setPassword(HashUtils.sha256(user.getPassword()));
-            userDB.get().setType(user.getType());
             userRepository.save(userDB.get());
         }
+    }
+
+    @Transactional
+    @Override
+    public User registerNewUserAccount(UserDto userDto) throws UserException {
+            if(emailExists(userDto.getLogin())){
+                throw UserException.createExceptionEmailExists();
+            }
+
+        User user = new User();
+        user.setLogin(userDto.getLogin());
+        user.setPassword(userDto.getPassword());
+
+        user.setRoles(Arrays.asList(roleRepository.findByName("ROLE_USER")));
+        return userRepository.save(user);
+    }
+
+    private boolean emailExists(String email) {
+        return userRepository.findByLogin(email) != null;
     }
 }
