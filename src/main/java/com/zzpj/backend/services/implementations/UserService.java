@@ -2,6 +2,7 @@ package com.zzpj.backend.services.implementations;
 
 import com.zzpj.backend.DTOs.UserDto;
 import com.zzpj.backend.entities.User;
+import com.zzpj.backend.exceptions.AppBaseException;
 import com.zzpj.backend.exceptions.UserException;
 import com.zzpj.backend.repositories.RoleRepository;
 import com.zzpj.backend.repositories.UserRepository;
@@ -23,8 +24,9 @@ public class UserService implements UserServiceLocal {
     private RoleRepository roleRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
     @Override
@@ -51,7 +53,7 @@ public class UserService implements UserServiceLocal {
     @Override
     public void editUser(User user) {
         Optional<User> userDB = userRepository.findById(user.getId());
-        if(userDB.isPresent()){
+        if (userDB.isPresent()) {
             userDB.get().setLogin(user.getLogin());
             userDB.get().setPassword(HashUtils.sha256(user.getPassword()));
             userRepository.save(userDB.get());
@@ -60,12 +62,14 @@ public class UserService implements UserServiceLocal {
 
     @Transactional
     @Override
-    public User registerNewUserAccount(UserDto userDto) throws UserException {
-            if(emailExists(userDto.getLogin())){
-                throw UserException.createExceptionEmailExists();
-            }
+    public User registerNewUserAccount(UserDto userDto) throws AppBaseException {
+        if (emailExists(userDto.getLogin())) {
+            throw UserException.createExceptionEmailExists();
+        }
 
         User user = new User();
+        user.setFirstName(userDto.getFirstName());
+        user.setLastName(userDto.getLastName());
         user.setLogin(userDto.getLogin());
         user.setPassword(userDto.getPassword());
 

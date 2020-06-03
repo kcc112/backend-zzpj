@@ -1,19 +1,31 @@
 package com.zzpj.backend.DTOs;
 
 
-import lombok.Getter;
+import com.zzpj.backend.validation.PasswordMatches;
+import com.zzpj.backend.validation.ValidEmail;
+import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+@Data
+@PasswordMatches
 public class UserDto {
-    @Getter
     @NotNull
     @NotEmpty
+    @ValidEmail
     private String login;
-    @Getter
+
     @NotNull
     @NotEmpty
     private String password;
     private String matchingPassword;
+
+    @NotNull
+    @NotEmpty
+    private String firstName;
+
+    @NotNull
+    @NotEmpty
+    private String lastName;
 }
