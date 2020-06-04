@@ -6,7 +6,6 @@ import com.zzpj.backend.entities.User;
 import com.zzpj.backend.repositories.PrivilegeRepository;
 import com.zzpj.backend.repositories.RoleRepository;
 import com.zzpj.backend.repositories.UserRepository;
-import com.zzpj.backend.utils.HashUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -33,7 +32,8 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
     @Autowired
     private PrivilegeRepository privilegeRepository;
 
-
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
@@ -52,7 +52,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
 
 
-        createUserIfNotFound("test@test.com", "Test", "Test", "test", new ArrayList<Role>(Arrays.asList(adminRole)));
+        createUserIfNotFound("admin@edu.pl", "Mateusz", "Wasilewski", "admin", new ArrayList<Role>(Arrays.asList(adminRole)));
 
         alreadySetup = true;
 
@@ -88,7 +88,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
             user = new User();
             user.setFirstName(firstName);
             user.setLastName(lastName);
-            user.setPassword(HashUtils.sha256(password));
+            user.setPassword(passwordEncoder.encode(password));
             user.setLogin(login);
         }
         user.setRoles(roles);

@@ -32,12 +32,6 @@ public class UserController {
         return user.orElseGet(User::new);
     }
 
-    @PostMapping
-    public String add(@RequestBody User user){
-        userService.addUser(user);
-        return "Success";
-    }
-
     @PutMapping
     public String edit(@RequestBody User user){
         userService.editUser(user);

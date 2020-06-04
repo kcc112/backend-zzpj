@@ -9,6 +9,7 @@ import com.zzpj.backend.repositories.UserRepository;
 import com.zzpj.backend.services.interfaceses.UserServiceLocal;
 import com.zzpj.backend.utils.HashUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -22,6 +23,9 @@ public class UserService implements UserServiceLocal {
     private UserRepository userRepository;
 
     private RoleRepository roleRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     public UserService(UserRepository userRepository, RoleRepository roleRepository) {
@@ -71,7 +75,7 @@ public class UserService implements UserServiceLocal {
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
         user.setLogin(userDto.getLogin());
-        user.setPassword(userDto.getPassword());
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
         user.setRoles(Arrays.asList(roleRepository.findByName("ROLE_USER")));
         return userRepository.save(user);

@@ -24,11 +24,9 @@ import java.util.List;
 @Transactional
 public class MyUserDetailsService implements UserDetailsService {
 
-    private UserRepository userRepository;
-
     @Autowired
-    private UserServiceLocal userService;
-
+    private UserRepository userRepository;
+    @Autowired
     private RoleRepository roleRepository;
 
 
@@ -36,9 +34,7 @@ public class MyUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
         User user = userRepository.findByLogin(login);
         if (user == null) {
-            return new org.springframework.security.core.userdetails.User(
-                    " ", " ", true, true, true, true,
-                    getAuthorities(Arrays.asList(roleRepository.findByName("ROLE_USER"))));
+           throw new UsernameNotFoundException(login);
         }
         return new org.springframework.security.core.userdetails.User(
                 user.getLogin(), user.getPassword(),
