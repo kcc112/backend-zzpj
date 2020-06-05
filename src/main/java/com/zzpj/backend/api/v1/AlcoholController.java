@@ -1,7 +1,9 @@
 package com.zzpj.backend.api.v1;
 
+import com.zzpj.backend.dto.AlcoholDTO;
 import com.zzpj.backend.entities.Alcohol;
 import com.zzpj.backend.exceptions.AppBaseException;
+import com.zzpj.backend.mappers.AlcoholMapper;
 import com.zzpj.backend.services.interfaceses.AlcoholServiceLocal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,7 +37,9 @@ public class AlcoholController {
     }
 
     @PostMapping
-    public ResponseEntity<String> add(@RequestBody Alcohol alcohol) {
+    public ResponseEntity<String> add(@RequestBody AlcoholDTO alcoholDTO) {
+        AlcoholMapper alcoholMapper = new AlcoholMapper();
+        Alcohol alcohol = alcoholMapper.mapAlcoholDTOToAlcohol(alcoholDTO);
         try {
             if(alcohol.getName() == null) throw new AppBaseException();
             alcoholService.addAlcohol(alcohol);
@@ -46,7 +50,9 @@ public class AlcoholController {
     }
 
     @PutMapping
-    public ResponseEntity<String> edit(@RequestBody Alcohol alcohol) {
+    public ResponseEntity<String> edit(@RequestBody AlcoholDTO alcoholDTO) {
+        AlcoholMapper alcoholMapper = new AlcoholMapper();
+        Alcohol alcohol = alcoholMapper.mapAlcoholDTOToAlcohol(alcoholDTO);
         try {
             if(alcohol.getId() != null && alcohol.getId() < 0) throw new AppBaseException();
             alcoholService.editAlcohol(alcohol);
@@ -66,6 +72,4 @@ public class AlcoholController {
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-
 }

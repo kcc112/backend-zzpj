@@ -1,7 +1,9 @@
 package com.zzpj.backend.api.v1;
 
+import com.zzpj.backend.dto.UserDTO;
 import com.zzpj.backend.entities.User;
 import com.zzpj.backend.exceptions.AppBaseException;
+import com.zzpj.backend.mappers.UserMapper;
 import com.zzpj.backend.services.interfaceses.UserServiceLocal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,7 +36,9 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<String> add(@RequestBody User user) {
+    public ResponseEntity<String> add(@RequestBody UserDTO userDTO) {
+        UserMapper userMapper = new UserMapper();
+        User user = userMapper.mapUserDTOToUser(userDTO);
         try {
             if(user.getId() != null && user.getId() < 0) throw new AppBaseException();
             userService.addUser(user);
@@ -45,7 +49,9 @@ public class UserController {
     }
 
     @PutMapping
-    public ResponseEntity<String> edit(@RequestBody User user) {
+    public ResponseEntity<String> edit(@RequestBody UserDTO userDTO) {
+        UserMapper userMapper = new UserMapper();
+        User user = userMapper.mapUserDTOToUser(userDTO);
         try {
             if(user.getId() != null && user.getId() < 0) throw new AppBaseException();
             userService.editUser(user);

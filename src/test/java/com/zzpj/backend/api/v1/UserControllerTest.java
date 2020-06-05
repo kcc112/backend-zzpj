@@ -2,6 +2,7 @@ package com.zzpj.backend.api.v1;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zzpj.backend.dto.UserDTO;
 import com.zzpj.backend.entities.User;
 import com.zzpj.backend.services.interfaceses.UserServiceLocal;
 import org.junit.jupiter.api.Test;
@@ -65,7 +66,7 @@ public class UserControllerTest {
 
     @Test
     void add_whenValidInput_thenReturns201 () throws Exception {
-        User user = new User();
+        UserDTO user = new UserDTO();
         user.setLogin("Miro");
         user.setPassword("kfshdkfsdjgbsjbgjb5r43y52tr673476");
         user.setType("ADMIN");
@@ -87,7 +88,7 @@ public class UserControllerTest {
 
     @Test
     void edit_whenValidInput_thenReturns200 () throws Exception {
-        User user = new User();
+        UserDTO user = new UserDTO();
         user.setLogin("Miro");
         user.setPassword("kfshdkfsdjgbsjbgjb5r43y52tr673476");
         user.setType("ADMIN");
@@ -121,5 +122,4 @@ public class UserControllerTest {
         mockMvc.perform(delete("/api/v1/users/-1")).
                 andExpect(status().isInternalServerError());
     }
-
 }

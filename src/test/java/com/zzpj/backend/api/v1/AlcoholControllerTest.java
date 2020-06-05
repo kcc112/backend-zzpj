@@ -1,6 +1,7 @@
 package com.zzpj.backend.api.v1;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zzpj.backend.dto.AlcoholDTO;
 import com.zzpj.backend.entities.Alcohol;
 import com.zzpj.backend.entities.Warehouse;
 import com.zzpj.backend.services.interfaceses.AlcoholServiceLocal;
@@ -65,10 +66,7 @@ public class AlcoholControllerTest {
 
     @Test
     void add_whenValidInput_thenReturns201 () throws Exception {
-        Alcohol alcohol = new Alcohol();
-        Warehouse warehouse = new Warehouse();
-        warehouse.setAmount(20);
-        alcohol.setWarehouse(warehouse);
+        AlcoholDTO alcohol = new AlcoholDTO();
         alcohol.setName("Perla");
         alcohol.setCost(2.5);
         mockMvc.perform(post("/api/v1/alcohols")
@@ -93,7 +91,7 @@ public class AlcoholControllerTest {
 
     @Test
     void edit_whenValidInput_thenReturns200 () throws Exception {
-        Alcohol alcohol = new Alcohol();
+        AlcoholDTO alcohol = new AlcoholDTO();
         alcohol.setName("Perla");
         alcohol.setCost(2.5);
         mockMvc.perform(put("/api/v1/alcohols")
@@ -122,7 +120,4 @@ public class AlcoholControllerTest {
         mockMvc.perform(delete("/api/v1/alcohols/-1")).
                 andExpect(status().isInternalServerError());
     }
-
-
-
 }

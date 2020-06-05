@@ -26,7 +26,7 @@ public class PurchaseController {
         return new ResponseEntity<>(purchaseService.getAllPurchases(), HttpStatus.OK);
     }
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<String> add(@RequestBody Purchase purchase){
       try {
           if(purchase.getId() != null && purchase.getId() < 0) throw new AppBaseException();
