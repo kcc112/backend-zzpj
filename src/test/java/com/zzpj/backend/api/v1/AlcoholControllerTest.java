@@ -3,6 +3,7 @@ package com.zzpj.backend.api.v1;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zzpj.backend.dto.AlcoholDTO;
 import com.zzpj.backend.entities.Alcohol;
+import com.zzpj.backend.entities.Warehouse;
 import com.zzpj.backend.services.interfaceses.AlcoholServiceLocal;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,22 +65,34 @@ public class AlcoholControllerTest {
     }
 
     @Test
-    void add_whenValidInput_thenReturns200 () throws Exception {
+    void add_whenValidInput_thenReturns201 () throws Exception {
         AlcoholDTO alcohol = new AlcoholDTO();
         alcohol.setName("Perla");
-        alcohol.setAmount(20);
         alcohol.setCost(2.5);
         mockMvc.perform(post("/api/v1/alcohols")
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(alcohol))
-        ).andExpect(status().isOk());
+        ).andExpect(status().isCreated());
+    }
+
+    @Test
+    void add_whenInValidInput_thenReturns500 () throws Exception {
+        Alcohol alcohol = new Alcohol();
+        Warehouse warehouse = new Warehouse();
+        warehouse.setAmount(20);
+        alcohol.setWarehouse(warehouse);
+        alcohol.setName(null);
+        alcohol.setCost(2.5);
+        mockMvc.perform(post("/api/v1/alcohols")
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(alcohol))
+        ).andExpect(status().isInternalServerError());
     }
 
     @Test
     void edit_whenValidInput_thenReturns200 () throws Exception {
         AlcoholDTO alcohol = new AlcoholDTO();
         alcohol.setName("Perla");
-        alcohol.setAmount(20);
         alcohol.setCost(2.5);
         mockMvc.perform(put("/api/v1/alcohols")
                 .contentType("application/json")
@@ -88,11 +101,23 @@ public class AlcoholControllerTest {
     }
 
     @Test
+    void edit_whenInValidInput_thenReturns304 () throws Exception {
+        Alcohol alcohol = new Alcohol();
+        alcohol.setId(-1l);
+        mockMvc.perform(put("/api/v1/alcohols")
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(alcohol))
+        ).andExpect(status().isNotModified());
+    }
+
+    @Test
     void delete_whenValidInput_thenReturns200 () throws Exception {
         mockMvc.perform(delete("/api/v1/alcohols/1")).
                 andExpect(status().isOk());
     }
-
-
-
+    @Test
+    void delete_whenInValidInput_thenReturns500 () throws Exception {
+        mockMvc.perform(delete("/api/v1/alcohols/-1")).
+                andExpect(status().isInternalServerError());
+    }
 }

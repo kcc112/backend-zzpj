@@ -22,7 +22,17 @@ public class AlcoholService implements AlcoholServiceLocal {
 
     @Override
     public void addAlcohol(Alcohol alcohol) {
-        alcoholRepository.save(alcohol);
+      Optional<Alcohol> alcoholDB=  alcoholRepository.findAll()
+              .stream()
+              .filter(e-> e.getName().equals(alcohol.getName()))
+              .findFirst();
+      if(alcoholDB.isPresent()){
+          alcoholDB.get().getWarehouse().addAmount(alcohol.getWarehouse().getAmount());
+          alcoholRepository.save(alcoholDB.get());
+      }
+      else {
+          alcoholRepository.save(alcohol);
+      }
     }
 
     @Override

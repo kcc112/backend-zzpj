@@ -9,7 +9,6 @@ public class AlcoholMapper {
         alcohol.setId(alcoholDTO.getId());
         alcohol.setName(alcoholDTO.getName());
         alcohol.setCost(alcoholDTO.getCost());
-        alcohol.setAmount(alcoholDTO.getAmount());
         return alcohol;
     }
 }

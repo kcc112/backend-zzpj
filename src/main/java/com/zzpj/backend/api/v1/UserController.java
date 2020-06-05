@@ -2,9 +2,12 @@ package com.zzpj.backend.api.v1;
 
 import com.zzpj.backend.dto.UserDTO;
 import com.zzpj.backend.entities.User;
+import com.zzpj.backend.exceptions.AppBaseException;
 import com.zzpj.backend.mappers.UserMapper;
 import com.zzpj.backend.services.interfaceses.UserServiceLocal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,38 +25,50 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> getAll(){
+    public List<User> getAll() {
         return userService.getAllUsers();
     }
 
     @GetMapping("{id}")
-    public User get(@PathVariable Long id) {
+    public ResponseEntity<User> get(@PathVariable Long id) {
         Optional<User> user = userService.getUser(id);
-        return user.orElseGet(User::new);
+        return new ResponseEntity<>(user.orElseGet(User::new), HttpStatus.OK);
     }
 
     @PostMapping
-    public String add(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<String> add(@RequestBody UserDTO userDTO) {
         UserMapper userMapper = new UserMapper();
         User user = userMapper.mapUserDTOToUser(userDTO);
-        user.setId(null);
-
-        userService.addUser(user);
-        return "Success";
+        try {
+            if(user.getId() != null && user.getId() < 0) throw new AppBaseException();
+            userService.addUser(user);
+        } catch (AppBaseException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping
-    public String edit(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<String> edit(@RequestBody UserDTO userDTO) {
         UserMapper userMapper = new UserMapper();
         User user = userMapper.mapUserDTOToUser(userDTO);
-
-        userService.editUser(user);
-        return "Success";
+        try {
+            if(user.getId() != null && user.getId() < 0) throw new AppBaseException();
+            userService.editUser(user);
+        } catch (AppBaseException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")
-    public String delete(@PathVariable Long id) {
-        userService.deleteUser(id);
-        return "Success";
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        try {
+            if(id < 0) throw new AppBaseException();
+            userService.deleteUser(id);
+        } catch (AppBaseException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

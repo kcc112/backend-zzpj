@@ -1,6 +1,7 @@
 package com.zzpj.backend.services;
 
 import com.zzpj.backend.entities.Alcohol;
+import com.zzpj.backend.entities.Warehouse;
 import com.zzpj.backend.repositories.AlcoholRepository;
 import com.zzpj.backend.services.implementations.AlcoholService;
 
@@ -27,7 +28,6 @@ public class AlcoholServiceTest {
     @Test
     public void testAddAlcohol() {
         Alcohol alcohol1 = new Alcohol();
-        alcohol1.setAmount(100);
         alcohol1.setCost(25.40);
         alcohol1.setId(1L);
         alcohol1.setName("Żubrówka");
@@ -42,7 +42,6 @@ public class AlcoholServiceTest {
     @Test
     public void testGetAlcohol() {
         Alcohol alcohol1 = new Alcohol();
-        alcohol1.setAmount(100);
         alcohol1.setCost(25.40);
         alcohol1.setId(1L);
         alcohol1.setName("Żubrówka");
@@ -59,12 +58,10 @@ public class AlcoholServiceTest {
     @Test
     public void testGetAllAlcohols() {
         Alcohol alcohol1 = new Alcohol();
-        alcohol1.setAmount(100);
         alcohol1.setCost(25.40);
         alcohol1.setId(1L);
         alcohol1.setName("Żubrówka");
         Alcohol alcohol2 = new Alcohol();
-        alcohol1.setAmount(200);
         alcohol1.setCost(55.20);
         alcohol1.setId(2L);
         alcohol1.setName("Tyskie");
@@ -93,12 +90,16 @@ public class AlcoholServiceTest {
     @Test
     public void testEditAlcohol() {
         Alcohol alcohol1 = new Alcohol();
-        alcohol1.setAmount(100);
         alcohol1.setCost(25.40);
+        Warehouse warehouse1 = new Warehouse();
+        warehouse1.setAmount(20);
+        alcohol1.setWarehouse(warehouse1);
         alcohol1.setId(1L);
         alcohol1.setName("Żubrówka");
         Alcohol alcohol2 = new Alcohol();
-        alcohol2.setAmount(200);
+        Warehouse warehouse2 = new Warehouse();
+        warehouse2.setAmount(30);
+        alcohol2.setWarehouse(warehouse2);
         alcohol2.setCost(55.50);
         alcohol2.setId(1L);
         alcohol2.setName("Tyskie");
