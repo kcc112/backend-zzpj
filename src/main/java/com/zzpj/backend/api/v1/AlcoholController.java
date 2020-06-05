@@ -1,6 +1,8 @@
 package com.zzpj.backend.api.v1;
 
+import com.zzpj.backend.dto.AlcoholDTO;
 import com.zzpj.backend.entities.Alcohol;
+import com.zzpj.backend.mappers.AlcoholMapper;
 import com.zzpj.backend.services.interfaceses.AlcoholServiceLocal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,33 +23,38 @@ public class AlcoholController {
     }
 
     @GetMapping
-    public List<Alcohol> getAll(){
+    public List<Alcohol> getAll() {
         return alcoholService.getAllAlcohols();
     }
 
     @GetMapping("{id}")
-    public Alcohol get(@PathVariable Long id){
+    public Alcohol get(@PathVariable Long id) {
         Optional<Alcohol> alcohol = alcoholService.getAlcohol(id);
         return alcohol.orElseGet(Alcohol::new);
     }
 
     @PostMapping
-    public String add(@RequestBody Alcohol alcohol){
+    public String add(@RequestBody AlcoholDTO alcoholDTO) {
+        AlcoholMapper alcoholMapper = new AlcoholMapper();
+        Alcohol alcohol = alcoholMapper.mapAlcoholDTOToAlcohol(alcoholDTO);
+        alcohol.setId(null);
+
         alcoholService.addAlcohol(alcohol);
         return "Success";
     }
 
     @PutMapping
-    public String edit(@RequestBody Alcohol alcohol){
+    public String edit(@RequestBody AlcoholDTO alcoholDTO) {
+        AlcoholMapper alcoholMapper = new AlcoholMapper();
+        Alcohol alcohol = alcoholMapper.mapAlcoholDTOToAlcohol(alcoholDTO);
+
         alcoholService.editAlcohol(alcohol);
         return "Success";
     }
 
     @DeleteMapping("{id}")
-    public String delete(@PathVariable Long id){
+    public String delete(@PathVariable Long id) {
         alcoholService.deleteAlcohol(id);
         return "Success";
     }
-
-
 }
