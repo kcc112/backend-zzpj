@@ -48,11 +48,10 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
         Role adminRole = createRoleIfNotFound("ROLE_ADMIN", adminPrivileges);
 
-        createRoleIfNotFound("ROLE_USER", userPrivileges);
-
-
+        Role userRole = createRoleIfNotFound("ROLE_USER", userPrivileges);
 
         createUserIfNotFound("admin@edu.pl", "Mateusz", "Wasilewski", "admin", new ArrayList<Role>(Arrays.asList(adminRole)));
+        createUserIfNotFound("user@edu.pl", "Szymon", "Dobrowolski", "user", new ArrayList<Role>(Arrays.asList(userRole)));
 
         alreadySetup = true;
 
