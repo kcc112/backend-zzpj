@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -30,7 +31,7 @@ public class UserController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<User> get(@PathVariable Long id) {
+    public ResponseEntity<User> get(@PathVariable UUID id) {
         Optional<User> user = userService.getUser(id);
         return new ResponseEntity<>(user.orElseGet(User::new), HttpStatus.OK);
     }
@@ -39,12 +40,12 @@ public class UserController {
     public ResponseEntity<String> add(@RequestBody UserDTO userDTO) {
         UserMapper userMapper = new UserMapper();
         User user = userMapper.mapUserDTOToUser(userDTO);
-        try {
-            if(user.getId() != null && user.getId() < 0) throw new AppBaseException();
-            userService.addUser(user);
-        } catch (AppBaseException e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+//        try {
+//            if (user.getUuid() != null) throw new AppBaseException();
+//            userService.addUser(user);
+//        } catch (AppBaseException e) {
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -52,23 +53,22 @@ public class UserController {
     public ResponseEntity<String> edit(@RequestBody UserDTO userDTO) {
         UserMapper userMapper = new UserMapper();
         User user = userMapper.mapUserDTOToUser(userDTO);
-        try {
-            if(user.getId() != null && user.getId() < 0) throw new AppBaseException();
-            userService.editUser(user);
-        } catch (AppBaseException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
-        }
+//        try {
+//            if (user.getUuid() != null) throw new AppBaseException();
+//            userService.editUser(user);
+//        } catch (AppBaseException e) {
+//            return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+//        }
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) {
-        try {
-            if(id < 0) throw new AppBaseException();
+    public ResponseEntity<String> delete(@PathVariable UUID id) {
+//        try {
             userService.deleteUser(id);
-        } catch (AppBaseException e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+//        } catch (AppBaseException e) {
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

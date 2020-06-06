@@ -28,12 +28,12 @@ public class PurchaseController {
 
     @PostMapping
     public ResponseEntity<String> add(@RequestBody Purchase purchase){
-      try {
-          if(purchase.getId() != null && purchase.getId() < 0) throw new AppBaseException();
-          purchaseService.addPurchase(purchase);
-    } catch (AppBaseException e) {
-        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+//      try {
+//          if (purchase.getUuid() != null) throw new AppBaseException();
+//          purchaseService.addPurchase(purchase);
+//    } catch (AppBaseException e) {
+//        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

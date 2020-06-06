@@ -6,12 +6,13 @@ import com.zzpj.backend.entities.User;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public interface UserServiceLocal {
 
     void addUser(User user);
-    Optional<User> getUser(Long id);
+    Optional<User> getUser(UUID id);
     List<User> getAllUsers();
-    void deleteUser(Long id);
+    void deleteUser(UUID id);
     void editUser(User user);
 }
