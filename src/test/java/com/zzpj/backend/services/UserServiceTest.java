@@ -4,7 +4,7 @@ import com.zzpj.backend.entities.User;
 import com.zzpj.backend.repositories.UserRepository;
 import com.zzpj.backend.services.implementations.UserService;
 
-import com.zzpj.backend.utils.HashUtils;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RunWith(MockitoJUnitRunner.class)
-public class UserServiceTest {
+class UserServiceTest {
 
     @Mock
     private UserRepository userRepository;
@@ -26,7 +26,7 @@ public class UserServiceTest {
     private UserService userService;
 
     @Test
-    public void testAddUser() {
+    void testAddUser() {
         User user1 = new User();
         user1.setPassword("123");
         user1.setLogin("test1");
@@ -41,7 +41,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void testGetUser() {
+    void testGetUser() {
         User user1 = new User();
         user1.setPassword("123");
         user1.setLogin("test1");
@@ -57,7 +57,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void testGetAllUser() {
+    void testGetAllUser() {
         User user1 = new User();
         user1.setPassword("123");
         user1.setLogin("test1");
@@ -81,7 +81,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void testDeleteUser() {
+    void testDeleteUser() {
         User user1 = new User();
         user1.setPassword("123");
         user1.setLogin("test1");
@@ -96,7 +96,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void testEditUser() {
+    void testEditUser() {
         User user1 = new User();
         user1.setPassword("123");
         user1.setLogin("test1");
@@ -118,6 +118,6 @@ public class UserServiceTest {
         Assertions.assertEquals(user2.getLogin(), user1.getLogin());
         Assertions.assertEquals(user2.getId(), user1.getId());
         Assertions.assertEquals(user2.getType(), user1.getType());
-        Assertions.assertEquals(HashUtils.sha256(user2.getPassword()), user1.getPassword());
+        Assertions.assertEquals(DigestUtils.sha256Hex(user2.getPassword()), user1.getPassword());
     }
 }

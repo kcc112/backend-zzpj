@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RunWith(MockitoJUnitRunner.class)
-public class AlcoholServiceTest {
+class AlcoholServiceTest {
 
     @Mock
     private AlcoholRepository alcoholRepository;
@@ -26,7 +26,7 @@ public class AlcoholServiceTest {
     private AlcoholService alcoholService;
 
     @Test
-    public void testAddAlcohol() {
+    void testAddAlcohol() {
         Alcohol alcohol1 = new Alcohol();
         alcohol1.setCost(25.40);
         alcohol1.setId(1L);
@@ -40,7 +40,7 @@ public class AlcoholServiceTest {
     }
 
     @Test
-    public void testGetAlcohol() {
+    void testGetAlcohol() {
         Alcohol alcohol1 = new Alcohol();
         alcohol1.setCost(25.40);
         alcohol1.setId(1L);
@@ -79,7 +79,7 @@ public class AlcoholServiceTest {
     }
 
     @Test
-    public void testDeleteAlcohol() {
+    void testDeleteAlcohol() {
         Mockito.doNothing().when(alcoholRepository).deleteById(1L);
 
         alcoholService.deleteAlcohol(1L);
@@ -88,7 +88,7 @@ public class AlcoholServiceTest {
     }
 
     @Test
-    public void testEditAlcohol() {
+    void testEditAlcohol() {
         Alcohol alcohol1 = new Alcohol();
         alcohol1.setCost(25.40);
         Warehouse warehouse1 = new Warehouse();

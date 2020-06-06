@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RunWith(MockitoJUnitRunner.class)
-public class PurchaseServiceTest {
+class PurchaseServiceTest {
 
     @Mock
     private PurchaseRepository purchaseRepository;
@@ -30,7 +30,7 @@ public class PurchaseServiceTest {
     private PurchaseService purchaseService;
 
     @Test
-    public void getAllPurchases() {
+    void getAllPurchases() {
         User user1 = new User();
         user1.setId(1L);
         user1.setType("KLIENT");
@@ -55,7 +55,7 @@ public class PurchaseServiceTest {
     }
 
     @Test
-    public void addPurchase() {
+    void addPurchase() {
         Warehouse warehouse1 = new Warehouse();
         warehouse1.setAmount(100);
         Alcohol alcohol1 = new Alcohol();
