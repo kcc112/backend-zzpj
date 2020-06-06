@@ -22,18 +22,19 @@ public class PurchaseController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Purchase>> get(){
+    public ResponseEntity<List<Purchase>> get() {
         return new ResponseEntity<>(purchaseService.getAllPurchases(), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<String> add(@RequestBody Purchase purchase){
-//      try {
-//          if (purchase.getUuid() != null) throw new AppBaseException();
-//          purchaseService.addPurchase(purchase);
-//    } catch (AppBaseException e) {
-//        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<String> add(@RequestBody Purchase purchase) {
+      try {
+          if (purchase.getUuid() != null) throw new AppBaseException();
+          purchaseService.addPurchase(purchase);
+      } catch (AppBaseException e) {
+          return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+      }
+
+      return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

@@ -28,7 +28,7 @@ public class PurchaseControllerTest {
     private ObjectMapper objectMapper;
 
     @MockBean
-    private PurchaseServiceLocal purchaseService;
+    PurchaseServiceLocal purchaseService;
 
 
     @Test
