@@ -20,7 +20,7 @@ import java.util.UUID;
 @RequestMapping("/api/v1/warehouses")
 public class WarehouseController {
 
-    private WarehouseServiceLocal warehouseService;
+    private final WarehouseServiceLocal warehouseService;
 
     @Autowired
     public WarehouseController(WarehouseServiceLocal warehouseService) {
@@ -37,12 +37,12 @@ public class WarehouseController {
             warehouseService.addWarehouse(warehouse);
         } catch (WarehouseException e) {
             if (e.getMessage().contains(WarehouseException.WAREHOUSE_ALREADY_EXIST)) {
-                return new ResponseEntity<>(HttpStatus.CONFLICT);
+                return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
             }
         } catch (AppBaseException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("{id}")
