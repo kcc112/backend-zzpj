@@ -22,8 +22,7 @@ public class UserService implements UserServiceLocal {
 
     @Override
     public void addUser(User user) {
-        String sha256hex = DigestUtils.sha256Hex(user.getPassword());
-        user.setPassword(sha256hex);
+        user.setPassword(DigestUtils.sha256Hex(user.getPassword()));
         userRepository.save(user);
     }
 
@@ -46,9 +45,8 @@ public class UserService implements UserServiceLocal {
     public void editUser(User user) {
         Optional<User> userDB = userRepository.findById(user.getId());
         if(userDB.isPresent()){
-            String sha256hex = DigestUtils.sha256Hex(user.getPassword());
             userDB.get().setLogin(user.getLogin());
-            userDB.get().setPassword(sha256hex);
+            userDB.get().setPassword(DigestUtils.sha256Hex(user.getPassword()));
             userDB.get().setType(user.getType());
             userRepository.save(userDB.get());
         }
