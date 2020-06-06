@@ -5,18 +5,22 @@ import lombok.Data;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Data
 public class Purchase {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue
+    @Column( columnDefinition = "uuid", updatable = false )
+    private UUID uuid;
+
     @OneToMany(mappedBy = "purchase", cascade = CascadeType.ALL)
     private List<PurchaseList> purchaseLists = new ArrayList<>();
+
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn(name = "user_uuid", referencedColumnName = "uuid")
     private User user;
 
 }

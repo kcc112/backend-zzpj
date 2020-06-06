@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -20,6 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(controllers = AlcoholController.class)
 public class AlcoholControllerTest {
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -27,8 +29,7 @@ public class AlcoholControllerTest {
     private ObjectMapper objectMapper;
 
     @MockBean
-    AlcoholServiceLocal alcoholService;
-
+    AlcoholServiceLocal alcoholServiceLocal;
 
     @Test
     void getAll_whenValidInput_thenReturns200 () throws Exception {
@@ -49,15 +50,14 @@ public class AlcoholControllerTest {
 
     @Test
     void getAlcohol_whenValidInput_thenReturns200 () throws Exception {
-        mockMvc.perform(get("/api/v1/alcohols/1"))
+        mockMvc.perform(get("/api/v1/alcohols/" + UUID.randomUUID()))
                 .andExpect(status().isOk());
     }
 
     @Test
     void getAlcohol_whenValidInput_thenReturnsAlcohol() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(get("/api/v1/alcohols/1")).andReturn();
-
         Alcohol expectedResponseBody = new Alcohol();
+        MvcResult mvcResult = mockMvc.perform(get("/api/v1/alcohols/" + UUID.randomUUID())).andReturn();
         String actualResponseBody = mvcResult.getResponse().getContentAsString();
 
         assertThat(objectMapper.writeValueAsString(expectedResponseBody))
@@ -101,23 +101,8 @@ public class AlcoholControllerTest {
     }
 
     @Test
-    void edit_whenInValidInput_thenReturns304 () throws Exception {
-        Alcohol alcohol = new Alcohol();
-        alcohol.setId(-1l);
-        mockMvc.perform(put("/api/v1/alcohols")
-                .contentType("application/json")
-                .content(objectMapper.writeValueAsString(alcohol))
-        ).andExpect(status().isNotModified());
-    }
-
-    @Test
     void delete_whenValidInput_thenReturns200 () throws Exception {
-        mockMvc.perform(delete("/api/v1/alcohols/1")).
+        mockMvc.perform(delete("/api/v1/alcohols/" + UUID.randomUUID())).
                 andExpect(status().isOk());
-    }
-    @Test
-    void delete_whenInValidInput_thenReturns500 () throws Exception {
-        mockMvc.perform(delete("/api/v1/alcohols/-1")).
-                andExpect(status().isInternalServerError());
     }
 }

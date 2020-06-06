@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 
 @Service
@@ -22,21 +23,20 @@ public class AlcoholService implements AlcoholServiceLocal {
 
     @Override
     public void addAlcohol(Alcohol alcohol) {
-      Optional<Alcohol> alcoholDB=  alcoholRepository.findAll()
+      Optional<Alcohol> alcoholDB = alcoholRepository.findAll()
               .stream()
-              .filter(e-> e.getName().equals(alcohol.getName()))
+              .filter(e -> e.getName().equals(alcohol.getName()))
               .findFirst();
-      if(alcoholDB.isPresent()){
+      if (alcoholDB.isPresent()) {
           alcoholDB.get().getWarehouse().addAmount(alcohol.getWarehouse().getAmount());
           alcoholRepository.save(alcoholDB.get());
-      }
-      else {
+      } else {
           alcoholRepository.save(alcohol);
       }
     }
 
     @Override
-    public Optional<Alcohol> getAlcohol(Long id) {
+    public Optional<Alcohol> getAlcohol(UUID id) {
         return alcoholRepository.findById(id);
     }
 
@@ -46,13 +46,13 @@ public class AlcoholService implements AlcoholServiceLocal {
     }
 
     @Override
-    public void deleteAlcohol(Long id) {
+    public void deleteAlcohol(UUID id) {
         alcoholRepository.deleteById(id);
     }
 
     @Override
     public void editAlcohol(Alcohol alcohol) {
-       if(alcoholRepository.findById(alcohol.getId()).isPresent()){
+       if (alcoholRepository.findById(alcohol.getUuid()).isPresent()) {
            alcoholRepository.save(alcohol);
        }
     }

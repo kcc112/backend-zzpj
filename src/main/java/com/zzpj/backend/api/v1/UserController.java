@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -30,7 +31,7 @@ public class UserController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<User> get(@PathVariable Long id) {
+    public ResponseEntity<User> get(@PathVariable UUID id) {
         Optional<User> user = userService.getUser(id);
         return new ResponseEntity<>(user.orElseGet(User::new), HttpStatus.OK);
     }
@@ -40,7 +41,7 @@ public class UserController {
         UserMapper userMapper = new UserMapper();
         User user = userMapper.mapUserDTOToUser(userDTO);
         try {
-            if(user.getId() != null && user.getId() < 0) throw new AppBaseException();
+            if (user.getUuid() != null) throw new AppBaseException();
             userService.addUser(user);
         } catch (AppBaseException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -53,7 +54,7 @@ public class UserController {
         UserMapper userMapper = new UserMapper();
         User user = userMapper.mapUserDTOToUser(userDTO);
         try {
-            if(user.getId() != null && user.getId() < 0) throw new AppBaseException();
+            if (user.getUuid() != null) throw new AppBaseException();
             userService.editUser(user);
         } catch (AppBaseException e) {
             return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
@@ -62,13 +63,8 @@ public class UserController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) {
-        try {
-            if(id < 0) throw new AppBaseException();
-            userService.deleteUser(id);
-        } catch (AppBaseException e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public ResponseEntity<String> delete(@PathVariable UUID id) {
+        userService.deleteUser(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

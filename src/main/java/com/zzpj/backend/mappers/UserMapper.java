@@ -6,7 +6,7 @@ import com.zzpj.backend.entities.User;
 public class UserMapper {
     public User mapUserDTOToUser(UserDTO userDTO) {
         User user = new User();
-        user.setId(userDTO.getId());
+        user.setUuid(userDTO.getUuid());
         user.setLogin(userDTO.getLogin());
         user.setPassword(userDTO.getPassword());
         user.setType(userDTO.getType());
