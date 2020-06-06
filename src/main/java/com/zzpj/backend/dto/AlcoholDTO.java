@@ -13,5 +13,5 @@ public class AlcoholDTO {
     private String name;
     private double cost;
     private int amount;
-    private UUID magazineUUID;
+    private UUID warehouseUuid;
 }
