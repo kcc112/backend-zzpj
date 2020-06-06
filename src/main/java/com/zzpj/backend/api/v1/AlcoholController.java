@@ -39,8 +39,7 @@ public class AlcoholController {
 
     @PostMapping
     public ResponseEntity<String> add(@RequestBody AlcoholDTO alcoholDTO) {
-        AlcoholMapper alcoholMapper = new AlcoholMapper();
-        Alcohol alcohol = alcoholMapper.mapAlcoholDTOToAlcohol(alcoholDTO);
+        Alcohol alcohol = AlcoholMapper.mapAlcoholDTOToAlcohol(alcoholDTO);
         try {
             if (alcohol.getName() == null) throw new AppBaseException();
             alcoholService.addAlcohol(alcohol);
@@ -52,8 +51,7 @@ public class AlcoholController {
 
     @PutMapping
     public ResponseEntity<String> edit(@RequestBody AlcoholDTO alcoholDTO) {
-        AlcoholMapper alcoholMapper = new AlcoholMapper();
-        Alcohol alcohol = alcoholMapper.mapAlcoholDTOToAlcohol(alcoholDTO);
+        Alcohol alcohol = AlcoholMapper.mapAlcoholDTOToAlcohol(alcoholDTO);
         try {
             if (alcohol.getUuid() != null) throw new AppBaseException();
             alcoholService.editAlcohol(alcohol);
