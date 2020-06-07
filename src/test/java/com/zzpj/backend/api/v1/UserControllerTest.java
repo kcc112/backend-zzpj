@@ -2,6 +2,7 @@ package com.zzpj.backend.api.v1;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zzpj.backend.dto.UserDTO;
 import com.zzpj.backend.entities.User;
 import com.zzpj.backend.services.interfaceses.UserServiceLocal;
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -48,13 +50,13 @@ public class UserControllerTest {
 
     @Test
     void getUser_whenValidInput_thenReturns200 () throws Exception {
-        mockMvc.perform(get("/api/v1/users/1"))
+        mockMvc.perform(get("/api/v1/users/"  + UUID.randomUUID()))
                 .andExpect(status().isOk());
     }
 
     @Test
     void getUser_whenValidInput_thenReturnsUser() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(get("/api/v1/users/1")).andReturn();
+        MvcResult mvcResult = mockMvc.perform(get("/api/v1/users/"  + UUID.randomUUID())).andReturn();
 
         User expectedResponseBody = new User();
         String actualResponseBody = mvcResult.getResponse().getContentAsString();
@@ -64,21 +66,12 @@ public class UserControllerTest {
     }
 
     @Test
-    void add_whenValidInput_thenReturns200 () throws Exception {
-        User user = new User();
-        user.setLogin("Miro");
-        user.setPassword("kfshdkfsdjgbsjbgjb5r43y52tr673476");
-        mockMvc.perform(post("/api/v1/users")
-                .contentType("application/json")
-                .content(objectMapper.writeValueAsString(user))
-        ).andExpect(status().isOk());
-    }
-
-    @Test
     void edit_whenValidInput_thenReturns200 () throws Exception {
-        User user = new User();
-        user.setLogin("Miro");
-        user.setPassword("kfshdkfsdjgbsjbgjb5r43y52tr673476");
+        UserDTO user = new UserDTO();
+        user.setLogin("miro@o2.pl");
+        user.setFirstName("Miro");
+        user.setLastName("Kudra");
+        user.setPassword("Kozak");
         mockMvc.perform(put("/api/v1/users")
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(user))
@@ -87,8 +80,7 @@ public class UserControllerTest {
 
     @Test
     void delete_whenValidInput_thenReturns200 () throws Exception {
-        mockMvc.perform(delete("/api/v1/users/1")).
+        mockMvc.perform(delete("/api/v1/users/" + UUID.randomUUID())).
                 andExpect(status().isOk());
     }
-
 }

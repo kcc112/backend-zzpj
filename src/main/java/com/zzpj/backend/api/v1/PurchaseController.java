@@ -1,8 +1,11 @@
 package com.zzpj.backend.api.v1;
 
 import com.zzpj.backend.entities.Purchase;
+import com.zzpj.backend.exceptions.AppBaseException;
 import com.zzpj.backend.services.interfaceses.PurchaseServiceLocal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,13 +22,19 @@ public class PurchaseController {
     }
 
     @GetMapping
-    public List<Purchase> get(){
-        return purchaseService.getAllPurchases();
+    public ResponseEntity<List<Purchase>> get() {
+        return new ResponseEntity<>(purchaseService.getAllPurchases(), HttpStatus.OK);
     }
 
-    @PostMapping()
-    public String add(@RequestBody Purchase purchase){
-        purchaseService.addPurchase(purchase);
-        return "Success";
+    @PostMapping
+    public ResponseEntity<String> add(@RequestBody Purchase purchase) {
+      try {
+          if (purchase.getUuid() != null) throw new AppBaseException("Invalid data");
+          purchaseService.addPurchase(purchase);
+      } catch (AppBaseException e) {
+          return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+      }
+
+      return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

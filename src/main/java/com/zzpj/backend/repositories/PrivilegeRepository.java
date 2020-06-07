@@ -3,6 +3,8 @@ package com.zzpj.backend.repositories;
 import com.zzpj.backend.entities.Privilege;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface PrivilegeRepository extends JpaRepository<Privilege, Long> {
+import java.util.UUID;
+
+public interface PrivilegeRepository extends JpaRepository<Privilege, UUID> {
     Privilege findByName(String name);
 }

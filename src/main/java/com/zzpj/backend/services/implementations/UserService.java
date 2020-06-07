@@ -1,6 +1,6 @@
 package com.zzpj.backend.services.implementations;
 
-import com.zzpj.backend.DTOs.UserDto;
+import com.zzpj.backend.dto.UserDTO;
 import com.zzpj.backend.entities.User;
 import com.zzpj.backend.exceptions.AppBaseException;
 import com.zzpj.backend.exceptions.UserException;
@@ -16,6 +16,7 @@ import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserService implements UserServiceLocal {
@@ -40,7 +41,7 @@ public class UserService implements UserServiceLocal {
     }
 
     @Override
-    public Optional<User> getUser(Long id) {
+    public Optional<User> getUser(UUID id) {
         return userRepository.findById(id);
     }
 
@@ -50,23 +51,24 @@ public class UserService implements UserServiceLocal {
     }
 
     @Override
-    public void deleteUser(Long id) {
+    public void deleteUser(UUID id) {
         userRepository.deleteById(id);
     }
 
     @Override
     public void editUser(User user) {
-        Optional<User> userDB = userRepository.findById(user.getId());
-        if (userDB.isPresent()) {
-            userDB.get().setLogin(user.getLogin());
-            userDB.get().setPassword(HashUtils.sha256(user.getPassword()));
-            userRepository.save(userDB.get());
+        User userDB = userRepository.findByLogin(user.getLogin());
+        if(userDB != null){
+            userDB.setFirstName(user.getFirstName());
+            userDB.setLastName(user.getLastName());
+            userDB.setPassword(passwordEncoder.encode(user.getPassword()));
+            userRepository.save(userDB);
         }
     }
 
     @Transactional
     @Override
-    public User registerNewUserAccount(UserDto userDto) throws AppBaseException {
+    public User registerNewUserAccount(UserDTO userDto) throws AppBaseException {
         if (emailExists(userDto.getLogin())) {
             throw UserException.createExceptionEmailExists();
         }

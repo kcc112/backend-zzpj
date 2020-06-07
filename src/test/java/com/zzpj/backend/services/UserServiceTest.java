@@ -15,6 +15,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceTest {
@@ -25,45 +26,35 @@ public class UserServiceTest {
     @InjectMocks
     private UserService userService;
 
-    @Test
-    public void testAddUser() {
-        User user1 = new User();
-        user1.setPassword("123");
-        user1.setLogin("test1");
-        user1.setId(1L);
-
-        Mockito.when(userRepository.save(user1)).thenReturn(user1);
-
-        userService.addUser(user1);
-
-        Mockito.verify(userRepository, Mockito.times(1)).save(user1);
-    }
 
     @Test
     public void testGetUser() {
+        UUID uuid = UUID.randomUUID();
         User user1 = new User();
         user1.setPassword("123");
         user1.setLogin("test1");
-        user1.setId(1L);
+        user1.setUuid(uuid);
 
-        Mockito.when(userRepository.findById(1L)).thenReturn(Optional.of(user1));
+        Mockito.when(userRepository.findById(uuid)).thenReturn(Optional.of(user1));
 
-        User userFromService = userService.getUser(1L).get();
+        User userFromService = userService.getUser(uuid).get();
 
-        Mockito.verify(userRepository, Mockito.times(1)).findById(1L);
+        Mockito.verify(userRepository, Mockito.times(1)).findById(uuid);
         Assertions.assertEquals(user1.getLogin(), userFromService.getLogin());
     }
 
     @Test
     public void testGetAllUser() {
+        UUID uuid1 = UUID.randomUUID();
+        UUID uuid2 = UUID.randomUUID();
         User user1 = new User();
         user1.setPassword("123");
         user1.setLogin("test1");
-        user1.setId(1L);
+        user1.setUuid(uuid1);
         User user2 = new User();
         user2.setPassword("456");
         user2.setLogin("test2");
-        user2.setId(2L);
+        user2.setUuid(uuid2);
         List<User> users = new ArrayList<>();
         users.add(user1);
         users.add(user2);
@@ -78,38 +69,41 @@ public class UserServiceTest {
 
     @Test
     public void testDeleteUser() {
+        UUID uuid = UUID.randomUUID();
         User user1 = new User();
         user1.setPassword("123");
         user1.setLogin("test1");
-        user1.setId(1L);
+        user1.setUuid(uuid);
 
-        Mockito.doNothing().when(userRepository).deleteById(1L);
+        Mockito.doNothing().when(userRepository).deleteById(uuid);
 
-        userService.deleteUser(1L);
+        userService.deleteUser(uuid);
 
-        Mockito.verify(userRepository, Mockito.times(1)).deleteById(1L);
+        Mockito.verify(userRepository, Mockito.times(1)).deleteById(uuid);
     }
 
     @Test
     public void testEditUser() {
+        UUID uuid = UUID.randomUUID();
         User user1 = new User();
         user1.setPassword("123");
         user1.setLogin("test1");
-        user1.setId(1L);
+        user1.setUuid(uuid);
         User user2 = new User();
         user2.setPassword("456");
         user2.setLogin("test2");
-        user2.setId(1L);
+        user2.setUuid(uuid);
 
-        Mockito.when(userRepository.findById(1L)).thenReturn(Optional.of(user1));
+        Mockito.when(userRepository.findById(uuid)).thenReturn(Optional.of(user1));
         Mockito.when(userRepository.save(user1)).thenReturn(user1);
 
         userService.editUser(user2);
 
-        Mockito.verify(userRepository, Mockito.times(1)).findById(1L);
+        Mockito.verify(userRepository, Mockito.times(1)).findById(uuid);
         Mockito.verify(userRepository, Mockito.times(1)).save(user1);
         Assertions.assertEquals(user2.getLogin(), user1.getLogin());
-        Assertions.assertEquals(user2.getId(), user1.getId());
+
+        Assertions.assertEquals(user2.getUuid(), user1.getUuid());
         Assertions.assertEquals(HashUtils.sha256(user2.getPassword()), user1.getPassword());
     }
 }

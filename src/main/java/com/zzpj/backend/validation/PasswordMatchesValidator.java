@@ -1,6 +1,6 @@
 package com.zzpj.backend.validation;
 
-import com.zzpj.backend.DTOs.UserDto;
+import com.zzpj.backend.dto.UserDTO;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -13,7 +13,7 @@ public class PasswordMatchesValidator implements ConstraintValidator<PasswordMat
 
     @Override
     public boolean isValid(Object o, ConstraintValidatorContext constraintValidatorContext) {
-        UserDto userDto = (UserDto) o;
+        UserDTO userDto = (UserDTO) o;
         return userDto.getPassword().equals(userDto.getMatchingPassword());
     }
 

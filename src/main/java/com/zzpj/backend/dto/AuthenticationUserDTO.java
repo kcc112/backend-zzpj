@@ -1,7 +1,5 @@
-package com.zzpj.backend.DTOs;
+package com.zzpj.backend.dto;
 
-
-import com.zzpj.backend.validation.PasswordMatches;
 import com.zzpj.backend.validation.ValidEmail;
 import lombok.Data;
 
@@ -9,8 +7,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Data
-@PasswordMatches
-public class UserDto {
+public class AuthenticationUserDTO {
     @NotNull
     @NotEmpty
     @ValidEmail
@@ -19,13 +16,9 @@ public class UserDto {
     @NotNull
     @NotEmpty
     private String password;
-    private String matchingPassword;
 
-    @NotNull
-    @NotEmpty
-    private String firstName;
-
-    @NotNull
-    @NotEmpty
-    private String lastName;
+    public AuthenticationUserDTO(String login, String password) {
+        this.login = login;
+        this.password = password;
+    }
 }

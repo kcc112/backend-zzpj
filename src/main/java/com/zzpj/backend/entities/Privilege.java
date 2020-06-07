@@ -5,14 +5,16 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.UUID;
 
 @Entity
 @Data
 public class Privilege {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue
+    @Column( columnDefinition = "uuid", updatable = false )
+    private UUID uuid;
 
     private String name;
 

@@ -1,11 +1,7 @@
 package com.zzpj.backend.spring;
 
-import com.zzpj.backend.entities.Privilege;
-import com.zzpj.backend.entities.Role;
-import com.zzpj.backend.entities.User;
-import com.zzpj.backend.repositories.PrivilegeRepository;
-import com.zzpj.backend.repositories.RoleRepository;
-import com.zzpj.backend.repositories.UserRepository;
+import com.zzpj.backend.entities.*;
+import com.zzpj.backend.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -27,10 +23,22 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
     private UserRepository userRepository;
 
     @Autowired
+    private WarehouseRepository warehouseRepository;
+
+    @Autowired
     private RoleRepository roleRepository;
 
     @Autowired
     private PrivilegeRepository privilegeRepository;
+
+    @Autowired
+    private AlcoholRepository alcoholRepository;
+
+    @Autowired
+    private PurchaseRepository purchaseRepository;
+
+    @Autowired
+    private PurchaseListRepository purchaseListRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -38,7 +46,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
     @Override
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-        if(alreadySetup) return;
+        if (alreadySetup) return;
 
         Privilege readPrivilege = createPrivilegeIfNotFound("READ_PRIVILEGE");
         Privilege writePrivilege = createPrivilegeIfNotFound("WRITE_PRIVILEGE");
@@ -47,11 +55,19 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         final List<Privilege> userPrivileges = new ArrayList<Privilege>(Arrays.asList(readPrivilege));
 
         Role adminRole = createRoleIfNotFound("ROLE_ADMIN", adminPrivileges);
-
         Role userRole = createRoleIfNotFound("ROLE_USER", userPrivileges);
 
-        createUserIfNotFound("admin@edu.pl", "Mateusz", "Wasilewski", "admin", new ArrayList<Role>(Arrays.asList(adminRole)));
-        createUserIfNotFound("user@edu.pl", "Szymon", "Dobrowolski", "user", new ArrayList<Role>(Arrays.asList(userRole)));
+        User admin = createUserIfNotFound("admin@edu.pl", "Mateusz", "Wasilewski", "admin", new ArrayList<Role>(Arrays.asList(adminRole)));
+        User user = createUserIfNotFound("user@edu.pl", "Szymon", "Dobrowolski", "user", new ArrayList<Role>(Arrays.asList(userRole)));
+
+        Warehouse warehouse = createWarehouse(10);
+
+        Alcohol taterka = createAlcoholIfNotFound("Tatra", 1.99, warehouse);
+
+        Purchase purchase = createPurchase(user);
+
+        PurchaseList purchaseList = createPurchaseListIfNotFound(taterka, 3, purchase);
+
 
         alreadySetup = true;
 
@@ -94,4 +110,50 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         user = userRepository.save(user);
         return user;
     }
+
+    @Transactional
+    Warehouse createWarehouse(final int amount) {
+        Warehouse warehouse = new Warehouse();
+        warehouse.setAmount(amount);
+        warehouseRepository.save(warehouse);
+        return warehouse;
+    }
+
+
+    @Transactional
+    Alcohol createAlcoholIfNotFound(final String name, final double cost, final Warehouse warehouse) {
+        Alcohol alcohol = alcoholRepository.findByName(name);
+        if (alcohol == null) {
+            alcohol = new Alcohol();
+            alcohol.setName(name);
+            alcohol.setCost(cost);
+            alcohol.setWarehouse(warehouse);
+        }
+        alcoholRepository.save(alcohol);
+        return alcohol;
+
+    }
+
+    @Transactional
+    Purchase createPurchase(final User user) {
+        Purchase purchase = new Purchase();
+        purchase.setUser(user);
+        purchaseRepository.save(purchase);
+        return purchase;
+
+    }
+
+    @Transactional
+    PurchaseList createPurchaseListIfNotFound(final Alcohol alcohol, final int amount, final Purchase purchase) {
+        PurchaseList purchaseList = new PurchaseList();
+        purchaseList.setAlcohol(alcohol);
+        purchaseList.setBuyAmount(amount);
+        purchaseList.setPurchase(purchase);
+        purchaseListRepository.save(purchaseList);
+        return purchaseList;
+
+    }
+
+
+
 }

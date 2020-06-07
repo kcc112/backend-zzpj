@@ -1,4 +1,4 @@
-package com.zzpj.backend.DTOs;
+package com.zzpj.backend.dto;
 
 import lombok.Getter;
 
