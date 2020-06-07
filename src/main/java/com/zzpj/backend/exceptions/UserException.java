@@ -2,7 +2,7 @@ package com.zzpj.backend.exceptions;
 
 public class UserException extends AppBaseException {
 
-    public static String USER_NOT_FOUND = "user.not.found.problem";
+    public static final String USER_NOT_FOUND = "user.not.found.problem";
 
     public UserException(String msg){
         super(msg);

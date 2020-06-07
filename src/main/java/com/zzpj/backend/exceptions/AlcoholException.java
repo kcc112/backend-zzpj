@@ -3,8 +3,8 @@ package com.zzpj.backend.exceptions;
 
 
 public class AlcoholException extends AppBaseException{
-    public static String ALCOHOL_NOT_FOUND = "alcohol.not.found.problem";
-    public static String TOO_FEW_ALCOHOL = "too.few.alcohol.problem";
+    public static final String ALCOHOL_NOT_FOUND = "alcohol.not.found.problem";
+    public static final String TOO_FEW_ALCOHOL = "too.few.alcohol.problem";
 
     public AlcoholException(String msg){
         super(msg);
