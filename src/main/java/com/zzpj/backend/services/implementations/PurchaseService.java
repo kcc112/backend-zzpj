@@ -49,7 +49,7 @@ public class PurchaseService implements PurchaseServiceLocal {
        else {
            throw UserException.exceptionForUserNotFound();
         }
-       if(purchaseDTO.getPurchaseList().size() == 0){
+       if(purchaseDTO.getPurchaseList().isEmpty()){
            throw AlcoholException.exceptionForAlcoholNotFound();
        }
         for (AddPurchaseListDTO purchaseList : purchaseDTO.getPurchaseList()) {
