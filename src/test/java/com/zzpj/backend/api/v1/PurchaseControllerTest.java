@@ -2,23 +2,15 @@ package com.zzpj.backend.api.v1;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zzpj.backend.BackEndApplication;
 import com.zzpj.backend.entities.Alcohol;
 import com.zzpj.backend.entities.Purchase;
 import com.zzpj.backend.entities.User;
 import com.zzpj.backend.security.SecurityConfigurer;
-import com.zzpj.backend.security.TestSecurityConfiguration;
 import com.zzpj.backend.services.interfaceses.PurchaseServiceLocal;
-import org.hibernate.annotations.Filter;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Import;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -30,7 +22,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = PurchaseController.class)
-@ContextConfiguration(classes = {TestSecurityConfiguration.class})
+@ContextConfiguration(classes = {SecurityConfigurer.class})
 public class PurchaseControllerTest {
     @Autowired
     private MockMvc mockMvc;
