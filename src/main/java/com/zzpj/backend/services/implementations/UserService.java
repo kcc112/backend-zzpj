@@ -3,7 +3,7 @@ package com.zzpj.backend.services.implementations;
 import com.zzpj.backend.entities.User;
 import com.zzpj.backend.repositories.UserRepository;
 import com.zzpj.backend.services.interfaceses.UserServiceLocal;
-import com.zzpj.backend.utils.HashUtils;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +23,7 @@ public class UserService implements UserServiceLocal {
 
     @Override
     public void addUser(User user) {
-        user.setPassword(HashUtils.sha256(user.getPassword()));
+        user.setPassword(DigestUtils.sha256Hex(user.getPassword()));
         userRepository.save(user);
     }
 
@@ -47,7 +47,7 @@ public class UserService implements UserServiceLocal {
         Optional<User> userDB = userRepository.findById(user.getUuid());
         if(userDB.isPresent()){
             userDB.get().setLogin(user.getLogin());
-            userDB.get().setPassword(HashUtils.sha256(user.getPassword()));
+            userDB.get().setPassword(DigestUtils.sha256Hex(user.getPassword()));
             userDB.get().setType(user.getType());
             userRepository.save(userDB.get());
         }

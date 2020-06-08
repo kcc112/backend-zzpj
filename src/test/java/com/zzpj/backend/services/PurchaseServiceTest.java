@@ -19,7 +19,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RunWith(MockitoJUnitRunner.class)
-public class PurchaseServiceTest {
+class PurchaseServiceTest {
 
     @Mock
     private PurchaseRepository purchaseRepository;
@@ -31,7 +31,7 @@ public class PurchaseServiceTest {
     private PurchaseService purchaseService;
 
     @Test
-    public void getAllPurchases() {
+    void getAllPurchases() {
         UUID uuid1 = UUID.randomUUID();
         UUID uuid2 = UUID.randomUUID();
         User user1 = new User();
@@ -58,7 +58,7 @@ public class PurchaseServiceTest {
     }
 
     @Test
-    public void addPurchase() {
+    void addPurchase() {
         UUID uuid = UUID.randomUUID();
         Warehouse warehouse1 = new Warehouse();
         warehouse1.setAmount(100);
