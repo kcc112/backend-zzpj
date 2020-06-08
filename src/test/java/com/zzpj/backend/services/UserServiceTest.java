@@ -12,6 +12,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +24,9 @@ public class UserServiceTest {
 
     @Mock
     private UserRepository userRepository;
+
+    @Mock
+    private PasswordEncoder passwordEncoder;
 
     @InjectMocks
     private UserService userService;
@@ -82,28 +87,4 @@ public class UserServiceTest {
         Mockito.verify(userRepository, Mockito.times(1)).deleteById(uuid);
     }
 
-    @Test
-    public void testEditUser() {
-        UUID uuid = UUID.randomUUID();
-        User user1 = new User();
-        user1.setPassword("123");
-        user1.setLogin("test1");
-        user1.setUuid(uuid);
-        User user2 = new User();
-        user2.setPassword("456");
-        user2.setLogin("test2");
-        user2.setUuid(uuid);
-
-        Mockito.when(userRepository.findById(uuid)).thenReturn(Optional.of(user1));
-        Mockito.when(userRepository.save(user1)).thenReturn(user1);
-
-        userService.editUser(user2);
-
-        Mockito.verify(userRepository, Mockito.times(1)).findById(uuid);
-        Mockito.verify(userRepository, Mockito.times(1)).save(user1);
-        Assertions.assertEquals(user2.getLogin(), user1.getLogin());
-
-        Assertions.assertEquals(user2.getUuid(), user1.getUuid());
-        Assertions.assertEquals(HashUtils.sha256(user2.getPassword()), user1.getPassword());
-    }
 }
