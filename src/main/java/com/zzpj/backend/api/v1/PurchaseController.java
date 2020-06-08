@@ -1,7 +1,10 @@
 package com.zzpj.backend.api.v1;
 
-import com.zzpj.backend.entities.Purchase;
+import com.zzpj.backend.dto.AddPurchaseDTO;
+import com.zzpj.backend.dto.GetAllPurchaseDTO;
+import com.zzpj.backend.exceptions.AlcoholException;
 import com.zzpj.backend.exceptions.AppBaseException;
+import com.zzpj.backend.mappers.PurchaseGetAllMapper;
 import com.zzpj.backend.services.interfaceses.PurchaseServiceLocal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,19 +25,25 @@ public class PurchaseController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Purchase>> get() {
-        return new ResponseEntity<>(purchaseService.getAllPurchases(), HttpStatus.OK);
+    public ResponseEntity<List<GetAllPurchaseDTO>> getAll() {
+        return new ResponseEntity<>(PurchaseGetAllMapper.getAllPurchaseDTO(purchaseService.getAllPurchases()), HttpStatus.OK);
+    }
+
+    @GetMapping("user/{login}")
+    public ResponseEntity<List<GetAllPurchaseDTO>> getAllThisUser(@PathVariable String login) {
+        return new ResponseEntity<>(PurchaseGetAllMapper.getAllPurchaseDTO(purchaseService.getAllUserPurchases(login)), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<String> add(@RequestBody Purchase purchase) {
+    public ResponseEntity<String> add(@RequestBody AddPurchaseDTO purchase) {
       try {
-          if (purchase.getUuid() != null) throw new AppBaseException();
           purchaseService.addPurchase(purchase);
       } catch (AppBaseException e) {
-          return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+          if (e.getMessage().equals(AlcoholException.TOO_FEW_ALCOHOL)) {
+              return new ResponseEntity<>("Too few alcohol in warehouse", HttpStatus.FOUND);
+          }
+          return new ResponseEntity<>(HttpStatus.NOT_FOUND);
       }
-
       return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }
