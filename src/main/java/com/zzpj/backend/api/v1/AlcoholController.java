@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 
 @RestController
@@ -31,7 +32,7 @@ public class AlcoholController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Alcohol> get(@PathVariable Long id) {
+    public ResponseEntity<Alcohol> get(@PathVariable UUID id) {
         Optional<Alcohol> alcohol = alcoholService.getAlcohol(id);
         return new ResponseEntity<>(alcohol.orElseGet(Alcohol::new), HttpStatus.OK);
     }
@@ -41,7 +42,7 @@ public class AlcoholController {
         AlcoholMapper alcoholMapper = new AlcoholMapper();
         Alcohol alcohol = alcoholMapper.mapAlcoholDTOToAlcohol(alcoholDTO);
         try {
-            if(alcohol.getName() == null) throw new AppBaseException();
+            if (alcohol.getName() == null) throw new AppBaseException();
             alcoholService.addAlcohol(alcohol);
         } catch (AppBaseException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -54,7 +55,7 @@ public class AlcoholController {
         AlcoholMapper alcoholMapper = new AlcoholMapper();
         Alcohol alcohol = alcoholMapper.mapAlcoholDTOToAlcohol(alcoholDTO);
         try {
-            if(alcohol.getId() != null && alcohol.getId() < 0) throw new AppBaseException();
+            if (alcohol.getUuid() != null) throw new AppBaseException();
             alcoholService.editAlcohol(alcohol);
         } catch (AppBaseException e) {
             return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
@@ -63,9 +64,8 @@ public class AlcoholController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) {
+    public ResponseEntity<String> delete(@PathVariable UUID id) {
         try {
-            if(id < 0) throw new AppBaseException();
             alcoholService.deleteAlcohol(id);
         } catch (AppBaseException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

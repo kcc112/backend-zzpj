@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserService implements UserServiceLocal {
@@ -27,7 +28,7 @@ public class UserService implements UserServiceLocal {
     }
 
     @Override
-    public Optional<User> getUser(Long id) {
+    public Optional<User> getUser(UUID id) {
         return userRepository.findById(id);
     }
 
@@ -37,13 +38,13 @@ public class UserService implements UserServiceLocal {
     }
 
     @Override
-    public void deleteUser(Long id) {
+    public void deleteUser(UUID id) {
         userRepository.deleteById(id);
     }
 
     @Override
     public void editUser(User user) {
-        Optional<User> userDB = userRepository.findById(user.getId());
+        Optional<User> userDB = userRepository.findById(user.getUuid());
         if(userDB.isPresent()){
             userDB.get().setLogin(user.getLogin());
             userDB.get().setPassword(DigestUtils.sha256Hex(user.getPassword()));

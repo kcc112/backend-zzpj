@@ -7,11 +7,12 @@ import lombok.Data;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.UUID;
 
 @Data
 public class PurchaseDTO {
     @Setter(AccessLevel.NONE)
-    private Long id;
+    private UUID uuid;
     private List<PurchaseList> purchaseLists;
     private User user;
 }

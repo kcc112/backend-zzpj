@@ -2,7 +2,7 @@ package com.zzpj.backend.exceptions;
 
 public class AppBaseException extends Exception {
 
-    public AppBaseException(){
+    public AppBaseException() {
         super("Invalid data");
     }
 }
