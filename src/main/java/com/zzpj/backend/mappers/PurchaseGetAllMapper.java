@@ -9,7 +9,9 @@ import java.util.List;
 
 public class PurchaseGetAllMapper {
 
-    public static GetAllPurchaseDTO mapPurchaseToGetAllPurchaseDTO(Purchase purchase){
+    private PurchaseGetAllMapper() {}
+
+    public static GetAllPurchaseDTO mapPurchaseToGetAllPurchaseDTO(Purchase purchase) {
         GetAllPurchaseDTO purchaseDTO = new GetAllPurchaseDTO(purchase.getUuid());
         purchaseDTO.setPurchaseLists(purchase.getPurchaseLists());
         UserLoginIdDTO userDTO = new UserLoginIdDTO(purchase.getUser().getUuid());
@@ -18,10 +20,9 @@ public class PurchaseGetAllMapper {
         return purchaseDTO;
     }
 
-    public static List<GetAllPurchaseDTO> getAllPurchaseDTO(List<Purchase> purchases){
+    public static List<GetAllPurchaseDTO> getAllPurchaseDTO(List<Purchase> purchases) {
         List<GetAllPurchaseDTO> purchasesDTO = new ArrayList<>();
-        for(Purchase purchase: purchases
-            ){
+        for(Purchase purchase: purchases) {
             purchasesDTO.add(mapPurchaseToGetAllPurchaseDTO(purchase));
         }
         return purchasesDTO;
