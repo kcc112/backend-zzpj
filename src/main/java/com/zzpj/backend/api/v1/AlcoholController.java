@@ -1,5 +1,6 @@
 package com.zzpj.backend.api.v1;
 
+import com.zzpj.backend.dto.AddAlcoholDTO;
 import com.zzpj.backend.dto.AlcoholDTO;
 import com.zzpj.backend.entities.Alcohol;
 import com.zzpj.backend.entities.Warehouse;
@@ -43,11 +44,11 @@ public class AlcoholController {
     }
 
     @PostMapping
-    public ResponseEntity<String> add(@RequestBody AlcoholDTO alcoholDTO) {
-        Alcohol alcohol = AlcoholMapper.mapAlcoholDTOToAlcohol(alcoholDTO);
+    public ResponseEntity<String> add(@RequestBody AddAlcoholDTO addAlcoholDTO) {
+        Alcohol alcohol = AlcoholMapper.mapAddAlcoholDTOToAlcohol(addAlcoholDTO);
         try {
             if (alcohol.getName() == null) throw new AppBaseException();
-            Optional<Warehouse> warehouseFromDB = warehouseService.getWarehouse(alcoholDTO.getWarehouseUuid());
+            Optional<Warehouse> warehouseFromDB = warehouseService.getWarehouse(addAlcoholDTO.getWarehouseUuid());
             if (!warehouseFromDB.isPresent()) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }

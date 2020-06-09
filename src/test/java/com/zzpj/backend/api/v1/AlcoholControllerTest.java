@@ -1,11 +1,15 @@
 package com.zzpj.backend.api.v1;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zzpj.backend.dto.AddAlcoholDTO;
 import com.zzpj.backend.dto.AlcoholDTO;
 import com.zzpj.backend.entities.Alcohol;
 import com.zzpj.backend.entities.Warehouse;
+import com.zzpj.backend.exceptions.WarehouseException;
 import com.zzpj.backend.services.interfaceses.AlcoholServiceLocal;
+import com.zzpj.backend.services.interfaceses.WarehouseServiceLocal;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -13,9 +17,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -30,6 +36,9 @@ public class AlcoholControllerTest {
 
     @MockBean
     AlcoholServiceLocal alcoholServiceLocal;
+
+    @MockBean
+    WarehouseServiceLocal warehouseServiceLocal;
 
     @Test
     void getAll_whenValidInput_thenReturns200 () throws Exception {
@@ -66,9 +75,16 @@ public class AlcoholControllerTest {
 
     @Test
     void add_whenValidInput_thenReturns201 () throws Exception {
-        AlcoholDTO alcohol = new AlcoholDTO();
+        Warehouse warehouse = new Warehouse();
+        warehouse.setUuid(UUID.randomUUID());
+        warehouse.setAmount(0);
+        AddAlcoholDTO alcohol = new AddAlcoholDTO();
         alcohol.setName("Perla");
         alcohol.setCost(2.5);
+        alcohol.setWarehouseUuid(warehouse.getUuid());
+
+        Mockito.when(warehouseServiceLocal.getWarehouse(warehouse.getUuid())).thenReturn(Optional.of(warehouse));
+
         mockMvc.perform(post("/api/v1/alcohols")
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(alcohol))

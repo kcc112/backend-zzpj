@@ -34,7 +34,6 @@ public class WarehouseServiceTest {
         warehouse.setUuid(uuid);
         warehouse.setAmount(20);
 
-        Mockito.when(warehouseRepository.save(warehouse)).thenReturn(warehouse);
         Mockito.when(warehouseRepository.findById(warehouse.getUuid())).thenReturn(Optional.of(warehouse));
 
         try {
@@ -53,8 +52,6 @@ public class WarehouseServiceTest {
         warehouse1.setUuid(uuid);
         warehouse1.setAmount(20);
 
-
-        Mockito.when(warehouseRepository.save(warehouse1)).thenReturn(warehouse1);
         Mockito.when(warehouseRepository.findById(warehouse1.getUuid())).thenReturn(Optional.empty());
 
         try {
