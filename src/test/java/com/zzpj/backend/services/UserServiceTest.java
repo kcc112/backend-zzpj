@@ -4,7 +4,6 @@ import com.zzpj.backend.entities.User;
 import com.zzpj.backend.repositories.UserRepository;
 import com.zzpj.backend.services.implementations.UserService;
 
-import com.zzpj.backend.utils.HashUtils;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
@@ -30,7 +29,6 @@ public class UserServiceTest {
 
     @InjectMocks
     private UserService userService;
-
 
     @Test
     public void testGetUser() {
@@ -86,5 +84,4 @@ public class UserServiceTest {
 
         Mockito.verify(userRepository, Mockito.times(1)).deleteById(uuid);
     }
-
 }

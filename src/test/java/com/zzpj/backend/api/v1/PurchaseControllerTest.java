@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(controllers = PurchaseController.class)
 @ContextConfiguration(classes = {SecurityConfigurer.class})
-public class PurchaseControllerTest {
+class PurchaseControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
@@ -41,8 +41,25 @@ public class PurchaseControllerTest {
     }
 
     @Test
+    void getAllForUser_whenValidInput_thenReturns200 () throws Exception {
+        mockMvc.perform(get("/api/v1/purchases/user/Szymon"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
     void getAll_whenValidInput_thenReturnsPurchaseList() throws Exception {
         MvcResult mvcResult = mockMvc.perform(get("/api/v1/purchases")).andReturn();
+
+        ArrayList<Alcohol> expectedResponseBody = new ArrayList<>();
+        String actualResponseBody = mvcResult.getResponse().getContentAsString();
+
+        assertThat(objectMapper.writeValueAsString(expectedResponseBody))
+                .isEqualToIgnoringWhitespace(actualResponseBody);
+    }
+
+    @Test
+    void getAllForUser_whenValidInput_thenReturnsPurchaseList() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(get("/api/v1/purchases/user/Szymon")).andReturn();
 
         ArrayList<Alcohol> expectedResponseBody = new ArrayList<>();
         String actualResponseBody = mvcResult.getResponse().getContentAsString();
@@ -61,4 +78,5 @@ public class PurchaseControllerTest {
                 .content(objectMapper.writeValueAsString(purchase))
         ).andExpect(status().isCreated());
     }
+
 }

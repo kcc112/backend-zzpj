@@ -12,7 +12,6 @@ import java.util.UUID;
 
 public interface UserServiceLocal {
 
-    void addUser(User user);
     Optional<User> getUser(UUID id);
     List<User> getAllUsers();
     void deleteUser(UUID id);

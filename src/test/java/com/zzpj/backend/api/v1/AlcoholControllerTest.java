@@ -25,8 +25,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = AlcoholController.class)
-public class AlcoholControllerTest {
-
+class AlcoholControllerTest {
     @Autowired
     private MockMvc mockMvc;
 

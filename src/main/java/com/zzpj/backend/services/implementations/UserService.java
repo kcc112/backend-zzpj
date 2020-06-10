@@ -7,7 +7,6 @@ import com.zzpj.backend.exceptions.UserException;
 import com.zzpj.backend.repositories.RoleRepository;
 import com.zzpj.backend.repositories.UserRepository;
 import com.zzpj.backend.services.interfaceses.UserServiceLocal;
-import com.zzpj.backend.utils.HashUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,19 +24,13 @@ public class UserService implements UserServiceLocal {
 
     private RoleRepository roleRepository;
 
-    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
-    }
-
-    @Override
-    public void addUser(User user) {
-        user.setPassword(HashUtils.sha256(user.getPassword()));
-        userRepository.save(user);
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override

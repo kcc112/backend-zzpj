@@ -27,7 +27,7 @@ public class AlcoholServiceTest {
     private AlcoholService alcoholService;
 
     @Test
-    public void testAddAlcohol() throws Exception {
+    public void testAddAlcohol() {
         UUID uuid = UUID.randomUUID();
         Alcohol alcohol1 = new Alcohol();
         alcohol1.setCost(25.40);
@@ -84,9 +84,8 @@ public class AlcoholServiceTest {
     }
 
     @Test
-    public void testDeleteAlcohol() throws Exception {
+    public void testDeleteAlcohol() {
         UUID uuid = UUID.randomUUID();
-        Mockito.doNothing().when(alcoholRepository).deleteById(uuid);
 
         alcoholService.deleteAlcohol(uuid);
 
@@ -94,7 +93,7 @@ public class AlcoholServiceTest {
     }
 
     @Test
-    public void testEditAlcohol() throws Exception {
+    public void testEditAlcohol() {
         UUID uuid1 = UUID.randomUUID();
         Alcohol alcohol1 = new Alcohol();
         alcohol1.setCost(25.40);
