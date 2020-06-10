@@ -2,7 +2,6 @@ package com.zzpj.backend.spring;
 
 import com.zzpj.backend.entities.*;
 import com.zzpj.backend.repositories.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.crypto.password.PasswordEncoder;

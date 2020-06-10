@@ -4,7 +4,6 @@ import com.zzpj.backend.entities.Alcohol;
 import com.zzpj.backend.entities.Warehouse;
 import com.zzpj.backend.repositories.AlcoholRepository;
 import com.zzpj.backend.services.implementations.AlcoholService;
-
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
@@ -12,6 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

@@ -1,12 +1,8 @@
 package com.zzpj.backend.security;
 
-import com.zzpj.backend.entities.Privilege;
 import com.zzpj.backend.entities.Role;
 import com.zzpj.backend.entities.User;
-import com.zzpj.backend.repositories.RoleRepository;
 import com.zzpj.backend.repositories.UserRepository;
-import com.zzpj.backend.services.interfaceses.UserServiceLocal;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
