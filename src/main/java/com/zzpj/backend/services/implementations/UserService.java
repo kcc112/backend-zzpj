@@ -61,7 +61,7 @@ public class UserService implements UserServiceLocal {
 
     @Transactional
     @Override
-    public User registerNewUserAccount(UserDTO userDto) throws AppBaseException {
+    public void registerNewUserAccount(UserDTO userDto) throws AppBaseException {
         if (emailExists(userDto.getLogin())) {
             throw UserException.createExceptionEmailExists();
         }
@@ -73,7 +73,7 @@ public class UserService implements UserServiceLocal {
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
         user.setRoles(Arrays.asList(roleRepository.findByName("ROLE_USER")));
-        return userRepository.save(user);
+        userRepository.save(user);
     }
 
     private boolean emailExists(String email) {

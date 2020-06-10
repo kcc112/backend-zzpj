@@ -23,8 +23,12 @@ import java.util.List;
 @Transactional
 public class MyUserDetailsService implements UserDetailsService {
 
-    @Autowired
     private UserRepository userRepository;
+
+    public MyUserDetailsService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {

@@ -16,5 +16,5 @@ public interface UserServiceLocal {
     List<User> getAllUsers();
     void deleteUser(UUID id);
     void editUser(User user);
-    User registerNewUserAccount(UserDTO userDto) throws AppBaseException;
+    void registerNewUserAccount(UserDTO userDto) throws AppBaseException;
 }

@@ -19,29 +19,35 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
     boolean alreadySetup = false;
 
-    @Autowired
     private UserRepository userRepository;
 
-    @Autowired
     private WarehouseRepository warehouseRepository;
 
-    @Autowired
     private RoleRepository roleRepository;
 
-    @Autowired
     private PrivilegeRepository privilegeRepository;
 
-    @Autowired
     private AlcoholRepository alcoholRepository;
 
-    @Autowired
     private PurchaseRepository purchaseRepository;
 
-    @Autowired
     private PurchaseListRepository purchaseListRepository;
 
-    @Autowired
     private PasswordEncoder passwordEncoder;
+
+    public SetupDataLoader(UserRepository userRepository, WarehouseRepository warehouseRepository,
+                           RoleRepository roleRepository, PrivilegeRepository privilegeRepository,
+                           AlcoholRepository alcoholRepository, PurchaseRepository purchaseRepository,
+                           PurchaseListRepository purchaseListRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.warehouseRepository = warehouseRepository;
+        this.roleRepository = roleRepository;
+        this.privilegeRepository = privilegeRepository;
+        this.alcoholRepository = alcoholRepository;
+        this.purchaseRepository = purchaseRepository;
+        this.purchaseListRepository = purchaseListRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     @Transactional
