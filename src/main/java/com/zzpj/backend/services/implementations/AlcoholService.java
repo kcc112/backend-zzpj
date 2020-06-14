@@ -1,6 +1,8 @@
 package com.zzpj.backend.services.implementations;
 
 import com.zzpj.backend.entities.Alcohol;
+import com.zzpj.backend.exceptions.AlcoholException;
+import com.zzpj.backend.exceptions.AppBaseException;
 import com.zzpj.backend.repositories.AlcoholRepository;
 import com.zzpj.backend.services.interfaceses.AlcoholServiceLocal;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +24,13 @@ public class AlcoholService implements AlcoholServiceLocal {
     }
 
     @Override
-    public void addAlcohol(Alcohol alcohol) {
+    public void addAlcohol(Alcohol alcohol) throws AppBaseException {
       Optional<Alcohol> alcoholDB = alcoholRepository.findAll()
               .stream()
               .filter(e -> e.getName().equals(alcohol.getName()))
               .findFirst();
       if (alcoholDB.isPresent()) {
-          alcoholDB.get().getWarehouse().addAmount(alcohol.getWarehouse().getAmount());
-          alcoholRepository.save(alcoholDB.get());
+          throw AlcoholException.createAlcoholWithGivenNameExistException();
       } else {
           alcoholRepository.save(alcohol);
       }

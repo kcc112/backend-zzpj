@@ -75,5 +75,4 @@ class PurchaseControllerTest {
                 .content(objectMapper.writeValueAsString(purchase))
         ).andExpect(status().isCreated());
     }
-
 }

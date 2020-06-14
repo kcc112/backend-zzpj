@@ -6,7 +6,11 @@ public class AppBaseException extends Exception {
         super("Invalid data");
     }
 
-    public AppBaseException(String msg){
-        super(msg);
+    public AppBaseException(String message) {
+        super(message);
+    }
+
+    public AppBaseException(String message, Throwable e) {
+        super(message, e);
     }
 }
