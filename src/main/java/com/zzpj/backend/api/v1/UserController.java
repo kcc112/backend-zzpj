@@ -36,25 +36,12 @@ public class UserController {
         return new ResponseEntity<>(user.orElseGet(User::new), HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<String> add(@RequestBody UserDTO userDTO) {
-        UserMapper userMapper = new UserMapper();
-        User user = userMapper.mapUserDTOToUser(userDTO);
-        try {
-            if (user.getUuid() != null) throw new AppBaseException();
-            userService.addUser(user);
-        } catch (AppBaseException e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-
     @PutMapping
-    public ResponseEntity<String> edit(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<String> edit(@RequestBody UserDTO userDto) {
         UserMapper userMapper = new UserMapper();
-        User user = userMapper.mapUserDTOToUser(userDTO);
+        User user = userMapper.mapUserDTOToUser(userDto);
         try {
-            if (user.getUuid() != null) throw new AppBaseException();
+            if (user.getLogin() != null) throw new AppBaseException("Invalid data");
             userService.editUser(user);
         } catch (AppBaseException e) {
             return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
@@ -67,4 +54,5 @@ public class UserController {
         userService.deleteUser(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
 }

@@ -47,7 +47,7 @@ public class AlcoholController {
     public ResponseEntity<String> add(@RequestBody AddAlcoholDTO addAlcoholDTO) {
         Alcohol alcohol = AlcoholMapper.mapAddAlcoholDTOToAlcohol(addAlcoholDTO);
         try {
-            if (alcohol.getName() == null) throw new AppBaseException();
+            if (alcohol.getName() == null) throw new AppBaseException("Invalid data");
             Optional<Warehouse> warehouseFromDB = warehouseService.getWarehouse(addAlcoholDTO.getWarehouseUuid());
             if (!warehouseFromDB.isPresent()) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -68,7 +68,7 @@ public class AlcoholController {
     public ResponseEntity<String> edit(@RequestBody AlcoholDTO alcoholDTO) {
         Alcohol alcohol = AlcoholMapper.mapAlcoholDTOToAlcohol(alcoholDTO);
         try {
-            if (alcohol.getUuid() != null) throw new AppBaseException();
+            if (alcohol.getUuid() != null) throw new AppBaseException("Invalid data");
             alcoholService.editAlcohol(alcohol);
         } catch (AppBaseException e) {
             return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);

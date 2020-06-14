@@ -9,7 +9,6 @@ import com.zzpj.backend.repositories.PurchaseListRepository;
 import com.zzpj.backend.repositories.PurchaseRepository;
 import com.zzpj.backend.repositories.UserRepository;
 import com.zzpj.backend.services.implementations.PurchaseService;
-
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
@@ -17,13 +16,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @RunWith(MockitoJUnitRunner.class)
-class PurchaseServiceTest {
+public class PurchaseServiceTest {
 
     @Mock
     private PurchaseRepository purchaseRepository;
@@ -37,12 +37,11 @@ class PurchaseServiceTest {
     private PurchaseService purchaseService;
 
     @Test
-    void getAllPurchases() {
+    public void getAllPurchases() {
         UUID uuid1 = UUID.randomUUID();
         UUID uuid2 = UUID.randomUUID();
         User user1 = new User();
         user1.setUuid(uuid1);
-        user1.setType("KLIENT");
         user1.setLogin("test1");
         user1.setPassword("123");
         Purchase purchase1 = new Purchase();
@@ -64,17 +63,15 @@ class PurchaseServiceTest {
     }
 
     @Test
-    void getAllUserPurchases() {
+    public void getAllUserPurchases() {
         UUID uuid1 = UUID.randomUUID();
         UUID uuid2 = UUID.randomUUID();
         User user1 = new User();
         user1.setUuid(uuid1);
-        user1.setType("KLIENT");
         user1.setLogin("test1");
         user1.setPassword("123");
         User user2 = new User();
         user2.setUuid(uuid1);
-        user2.setType("KLIENT");
         user2.setLogin("test2");
         user2.setPassword("123");
         Purchase purchase1 = new Purchase();
@@ -99,12 +96,11 @@ class PurchaseServiceTest {
     }
 
     @Test
-    void addPurchase() {
+    public void addPurchase() {
         UUID uuid = UUID.randomUUID();
         UUID uuid2 = UUID.randomUUID();
         User user1 = new User();
         user1.setUuid(uuid);
-        user1.setType("KLIENT");
         Warehouse warehouse1 = new Warehouse();
         warehouse1.setAmount(100);
         Alcohol alcohol1 = new Alcohol();
