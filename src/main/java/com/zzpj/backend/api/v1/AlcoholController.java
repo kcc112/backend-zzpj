@@ -1,10 +1,14 @@
 package com.zzpj.backend.api.v1;
 
+import com.zzpj.backend.dto.AddAlcoholDTO;
 import com.zzpj.backend.dto.AlcoholDTO;
 import com.zzpj.backend.entities.Alcohol;
+import com.zzpj.backend.entities.Warehouse;
+import com.zzpj.backend.exceptions.AlcoholException;
 import com.zzpj.backend.exceptions.AppBaseException;
 import com.zzpj.backend.mappers.AlcoholMapper;
 import com.zzpj.backend.services.interfaceses.AlcoholServiceLocal;
+import com.zzpj.backend.services.interfaceses.WarehouseServiceLocal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +23,13 @@ import java.util.UUID;
 @RequestMapping("/api/v1/alcohols")
 public class AlcoholController {
 
-    private AlcoholServiceLocal alcoholService;
+    private final AlcoholServiceLocal alcoholService;
+    private final WarehouseServiceLocal warehouseService;
 
     @Autowired
-    public AlcoholController(AlcoholServiceLocal alcoholService) {
+    public AlcoholController(AlcoholServiceLocal alcoholService, WarehouseServiceLocal warehouseService) {
         this.alcoholService = alcoholService;
+        this.warehouseService = warehouseService;
     }
 
     @GetMapping
@@ -38,12 +44,20 @@ public class AlcoholController {
     }
 
     @PostMapping
-    public ResponseEntity<String> add(@RequestBody AlcoholDTO alcoholDTO) {
-        AlcoholMapper alcoholMapper = new AlcoholMapper();
-        Alcohol alcohol = alcoholMapper.mapAlcoholDTOToAlcohol(alcoholDTO);
+    public ResponseEntity<String> add(@RequestBody AddAlcoholDTO addAlcoholDTO) {
+        Alcohol alcohol = AlcoholMapper.mapAddAlcoholDTOToAlcohol(addAlcoholDTO);
         try {
             if (alcohol.getName() == null) throw new AppBaseException("Invalid data");
+            Optional<Warehouse> warehouseFromDB = warehouseService.getWarehouse(addAlcoholDTO.getWarehouseUuid());
+            if (!warehouseFromDB.isPresent()) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            alcohol.setWarehouse(warehouseFromDB.get());
             alcoholService.addAlcohol(alcohol);
+        } catch (AlcoholException e) {
+          if (e.getMessage().contains(AlcoholException.ALCOHOL_WITH_GIVEN_NAME_EXIST)) {
+              return new ResponseEntity<>(HttpStatus.CONFLICT);
+          }
         } catch (AppBaseException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -52,8 +66,7 @@ public class AlcoholController {
 
     @PutMapping
     public ResponseEntity<String> edit(@RequestBody AlcoholDTO alcoholDTO) {
-        AlcoholMapper alcoholMapper = new AlcoholMapper();
-        Alcohol alcohol = alcoholMapper.mapAlcoholDTOToAlcohol(alcoholDTO);
+        Alcohol alcohol = AlcoholMapper.mapAlcoholDTOToAlcohol(alcoholDTO);
         try {
             if (alcohol.getUuid() != null) throw new AppBaseException("Invalid data");
             alcoholService.editAlcohol(alcohol);
