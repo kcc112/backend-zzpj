@@ -1,5 +1,6 @@
 package com.zzpj.backend.services.aspects;
 
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -24,12 +25,12 @@ public class ServiceLoggingAspect {
         final String methodName = signature.getName();
         final StopWatch stopWatch = new StopWatch();
 
-        LOGGER.info("Starting execution of " + className + "." + methodName);
+        LOGGER.log(Level.INFO, () -> "Starting execution of " + className + "." + methodName);
         stopWatch.start();
         Object result = joinPoint.proceed();
         stopWatch.stop();
-        LOGGER.info("Finished execution of " + className + "." + methodName);
-        LOGGER.debug("Total execution time :: " + className + "." + methodName + " :: " + stopWatch.getLastTaskTimeMillis() + " ms");
+        LOGGER.log( Level.INFO, () -> "Finished execution of " + className + "." + methodName);
+        LOGGER.log(Level.DEBUG, () -> "Total execution time :: " + className + "." + methodName + " :: " + stopWatch.getLastTaskTimeMillis() + " ms");
         return result;
     }
 }

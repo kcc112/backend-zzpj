@@ -2,6 +2,7 @@ package com.zzpj.backend.services;
 
 import com.zzpj.backend.entities.Alcohol;
 import com.zzpj.backend.entities.Warehouse;
+import com.zzpj.backend.exceptions.AppBaseException;
 import com.zzpj.backend.repositories.AlcoholRepository;
 import com.zzpj.backend.services.implementations.AlcoholService;
 
@@ -18,7 +19,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RunWith(MockitoJUnitRunner.class)
-public class AlcoholServiceTest {
+class AlcoholServiceTest {
 
     @Mock
     private AlcoholRepository alcoholRepository;
@@ -27,7 +28,7 @@ public class AlcoholServiceTest {
     private AlcoholService alcoholService;
 
     @Test
-    public void testAddAlcohol() throws Exception {
+    void testAddAlcohol() throws AppBaseException {
         UUID uuid = UUID.randomUUID();
         Alcohol alcohol1 = new Alcohol();
         alcohol1.setCost(25.40);
@@ -42,7 +43,7 @@ public class AlcoholServiceTest {
     }
 
     @Test
-    public void testGetAlcohol() {
+    void testGetAlcohol() {
         UUID uuid = UUID.randomUUID();
         Alcohol alcohol1 = new Alcohol();
         alcohol1.setCost(25.40);
@@ -84,9 +85,8 @@ public class AlcoholServiceTest {
     }
 
     @Test
-    public void testDeleteAlcohol() throws Exception {
+    void testDeleteAlcohol() {
         UUID uuid = UUID.randomUUID();
-        Mockito.doNothing().when(alcoholRepository).deleteById(uuid);
 
         alcoholService.deleteAlcohol(uuid);
 
@@ -94,7 +94,7 @@ public class AlcoholServiceTest {
     }
 
     @Test
-    public void testEditAlcohol() throws Exception {
+    void testEditAlcohol() {
         UUID uuid1 = UUID.randomUUID();
         Alcohol alcohol1 = new Alcohol();
         alcohol1.setCost(25.40);

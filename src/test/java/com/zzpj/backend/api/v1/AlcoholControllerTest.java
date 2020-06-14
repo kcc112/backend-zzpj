@@ -5,7 +5,6 @@ import com.zzpj.backend.dto.AddAlcoholDTO;
 import com.zzpj.backend.dto.AlcoholDTO;
 import com.zzpj.backend.entities.Alcohol;
 import com.zzpj.backend.entities.Warehouse;
-import com.zzpj.backend.exceptions.WarehouseException;
 import com.zzpj.backend.services.interfaceses.AlcoholServiceLocal;
 import com.zzpj.backend.services.interfaceses.WarehouseServiceLocal;
 import org.junit.jupiter.api.Test;
@@ -21,13 +20,11 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = AlcoholController.class)
-public class AlcoholControllerTest {
-
+class AlcoholControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
