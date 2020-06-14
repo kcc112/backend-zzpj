@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = WarehouseController.class)
-public class WarehouseControllerTest {
+class WarehouseControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -29,7 +29,7 @@ public class WarehouseControllerTest {
     private WarehouseService warehouseService;
 
     @Test
-    public void addWarehouse_thenReturns201() throws Exception {
+    void addWarehouse_thenReturns201() throws Exception {
         UUID uuid = UUID.randomUUID();
 
         mockMvc.perform(post("/api/v1/warehouses")
@@ -39,7 +39,7 @@ public class WarehouseControllerTest {
     }
 
     @Test
-    public void addWarehouse_withExistedUuid_thenReturns409() throws Exception {
+    void addWarehouse_withExistedUuid_thenReturns409() throws Exception {
         UUID uuid = UUID.randomUUID();
 
         Mockito.doThrow(WarehouseException.createWarehouseAlreadyExistException()).when(warehouseService).addWarehouse(any(Warehouse.class));
@@ -51,7 +51,7 @@ public class WarehouseControllerTest {
     }
 
     @Test
-    public void addWarehouse_invalidRequest_thenReturns400() throws Exception {
+    void addWarehouse_invalidRequest_thenReturns400() throws Exception {
         UUID uuid = UUID.randomUUID();
         Warehouse warehouse1 = new Warehouse();
         warehouse1.setUuid(uuid);
@@ -64,7 +64,7 @@ public class WarehouseControllerTest {
     }
 
     @Test
-    public void getWarehouse_thenReturns200() throws Exception {
+    void getWarehouse_thenReturns200() throws Exception {
         UUID uuid = UUID.randomUUID();
         Warehouse warehouse1 = new Warehouse();
         warehouse1.setUuid(uuid);
@@ -79,7 +79,7 @@ public class WarehouseControllerTest {
     }
 
     @Test
-    public void getWarehouse_withNotExistedUuid_thenReturn404() throws Exception {
+    void getWarehouse_withNotExistedUuid_thenReturn404() throws Exception {
         UUID uuid = UUID.randomUUID();
         Warehouse warehouse1 = new Warehouse();
         warehouse1.setUuid(uuid);
@@ -94,7 +94,7 @@ public class WarehouseControllerTest {
     }
 
     @Test
-    public void getAllWarehouses_thenReturn200() throws Exception {
+    void getAllWarehouses_thenReturn200() throws Exception {
         UUID uuid = UUID.randomUUID();
         Warehouse warehouse1 = new Warehouse();
         warehouse1.setUuid(uuid);

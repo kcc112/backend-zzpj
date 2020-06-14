@@ -39,7 +39,7 @@ public class WarehouseServiceTest {
         try {
             warehouseService.addWarehouse(warehouse);
         } catch (AppBaseException e) {
-            Assertions.assertEquals(e.getMessage(), WarehouseException.WAREHOUSE_ALREADY_EXIST);
+            Assertions.assertEquals(WarehouseException.WAREHOUSE_ALREADY_EXIST, e.getMessage());
         }
 
         Mockito.verify(warehouseRepository, Mockito.times(0)).save(warehouse);

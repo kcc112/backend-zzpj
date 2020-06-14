@@ -6,6 +6,8 @@ import com.zzpj.backend.entities.Alcohol;
 
 public class AlcoholMapper {
 
+    private AlcoholMapper() {}
+
     public static Alcohol mapAlcoholDTOToAlcohol(AlcoholDTO alcoholDTO) {
         Alcohol alcohol = new Alcohol();
         alcohol.setUuid(alcoholDTO.getUuid());
