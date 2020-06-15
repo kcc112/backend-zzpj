@@ -29,7 +29,6 @@ public class AuthenticationController {
 
     private AuthenticationManager authenticationManager;
 
-    @Qualifier("myUserDetailsService")
     private UserDetailsService userDetailsService;
 
     private JwtUtil jwtUtil;
