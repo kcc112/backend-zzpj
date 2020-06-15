@@ -15,7 +15,7 @@ public class UserException extends AppBaseException {
         super(message, cause);
     }
 
-    static public UserException createExceptionEmailExists() {
+    public static UserException createExceptionEmailExists() {
         return new UserException(EMAIL_EXISTS_PROBLEM);
     }
 
