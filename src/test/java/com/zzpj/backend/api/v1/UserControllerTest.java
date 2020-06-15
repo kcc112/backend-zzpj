@@ -4,7 +4,6 @@ import com.zzpj.backend.dto.UserDTO;
 import com.zzpj.backend.entities.User;
 import com.zzpj.backend.security.MyUserDetailsService;
 import com.zzpj.backend.services.implementations.UserService;
-import com.zzpj.backend.services.interfaceses.UserServiceLocal;
 import com.zzpj.backend.utils.JwtUtil;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
