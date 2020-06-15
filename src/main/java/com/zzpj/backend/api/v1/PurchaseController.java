@@ -6,6 +6,7 @@ import com.zzpj.backend.entities.Purchase;
 import com.zzpj.backend.exceptions.AlcoholException;
 import com.zzpj.backend.exceptions.AppBaseException;
 import com.zzpj.backend.mappers.PurchaseGetAllMapper;
+import com.zzpj.backend.services.interfaceses.CurrencyServiceLocal;
 import com.zzpj.backend.services.interfaceses.PurchaseServiceLocal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,11 +20,10 @@ import java.util.List;
 @RequestMapping("/api/v1/purchases")
 public class PurchaseController {
 
-    private final PurchaseServiceLocal purchaseService;
-
     @Autowired
     public PurchaseController(@Qualifier("purchaseServiceWithCurrencies") PurchaseServiceLocal purchaseService) {
         this.purchaseService = purchaseService;
+        this.currencyService = currencyService;
     }
 
     @GetMapping
