@@ -1,6 +1,7 @@
 package com.zzpj.backend.api.v1;
 
 import com.zzpj.backend.dto.UserDTO;
+import com.zzpj.backend.dto.UserInfoDTO;
 import com.zzpj.backend.entities.User;
 import com.zzpj.backend.exceptions.AppBaseException;
 import com.zzpj.backend.mappers.UserMapper;
@@ -26,14 +27,16 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> getAll() {
-        return userService.getAllUsers();
+    public List<UserInfoDTO> getAll() {
+        UserMapper userMapper = new UserMapper();
+        return userMapper.mapUserToUserInfoDTOList(userService.getAllUsers());
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<User> get(@PathVariable UUID id) {
-        Optional<User> user = userService.getUser(id);
-        return new ResponseEntity<>(user.orElseGet(User::new), HttpStatus.OK);
+    public ResponseEntity<UserInfoDTO> get(@PathVariable UUID id) {
+        UserMapper userMapper = new UserMapper();
+        UserInfoDTO user = userMapper.mapUserToUserInfoDTO(userService.getUser(id).orElseGet(User::new));
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @PutMapping

@@ -1,6 +1,7 @@
 package com.zzpj.backend.api.v1;
 
 import com.zzpj.backend.dto.UserDTO;
+import com.zzpj.backend.dto.UserInfoDTO;
 import com.zzpj.backend.entities.User;
 import com.zzpj.backend.security.MyUserDetailsService;
 import com.zzpj.backend.services.implementations.UserService;
@@ -76,7 +77,7 @@ class UserControllerTest {
     void getUser_whenValidInput_thenReturnsUser() throws Exception {
         MvcResult mvcResult = mockMvc.perform(get("/api/v1/users/"  + UUID.randomUUID())).andReturn();
 
-        User expectedResponseBody = new User();
+        UserInfoDTO expectedResponseBody = new UserInfoDTO();
         String actualResponseBody = mvcResult.getResponse().getContentAsString();
 
         assertThat(objectMapper.writeValueAsString(expectedResponseBody))
