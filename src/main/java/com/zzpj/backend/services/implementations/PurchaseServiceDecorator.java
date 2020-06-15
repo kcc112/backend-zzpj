@@ -15,8 +15,8 @@ import java.util.List;
 @Qualifier("purchaseServiceWithCurrencies")
 public class PurchaseServiceDecorator implements PurchaseServiceLocal {
 
-    final private PurchaseServiceLocal purchaseService;
-    final private CurrencyServiceLocal currencyService;
+    private final PurchaseServiceLocal purchaseService;
+    private final CurrencyServiceLocal currencyService;
 
     @Value("${application.currency.base}")
     private String serverCurrency;

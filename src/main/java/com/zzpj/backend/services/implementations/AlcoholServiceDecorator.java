@@ -17,8 +17,8 @@ import java.util.UUID;
 @Qualifier("alcoholServiceWithCurrencies")
 public class AlcoholServiceDecorator implements AlcoholServiceLocal {
 
-    final private AlcoholServiceLocal alcoholService;
-    final private CurrencyServiceLocal currencyService;
+    private final AlcoholServiceLocal alcoholService;
+    private final CurrencyServiceLocal currencyService;
 
     @Value("${application.currency.base}")
     private String serverCurrency;
