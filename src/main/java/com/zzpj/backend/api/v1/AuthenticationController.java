@@ -6,6 +6,7 @@ import com.zzpj.backend.dto.UserDTO;
 import com.zzpj.backend.exceptions.AppBaseException;
 import com.zzpj.backend.services.interfaceses.UserServiceLocal;
 import com.zzpj.backend.utils.JwtUtil;
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -45,7 +46,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/registration")
-    public String registerUserAccount(
+    public ResponseEntity<?> registerUserAccount(
             @RequestBody @Valid UserDTO userDTO) {
         try {
             userService.registerNewUserAccount(userDTO);
@@ -53,7 +54,7 @@ public class AuthenticationController {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, exc.getMessage(), exc);
         }
-        return "Success";
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
