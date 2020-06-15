@@ -14,7 +14,7 @@ public class EmailValidator implements ConstraintValidator<ValidEmail, String> {
 
     @Override
     public void initialize(ValidEmail constraintAnnotation) {
-
+        //The default implementation is a no-op.
     }
 
     @Override

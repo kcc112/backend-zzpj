@@ -56,7 +56,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> createAuthenticationToken(@Valid @RequestBody AuthenticationUserDTO authenticationUserDTO)
+    public ResponseEntity<AuthenticationResponse> createAuthenticationToken(@Valid @RequestBody AuthenticationUserDTO authenticationUserDTO)
             throws Exception {
         try {
             authenticationManager.authenticate(
