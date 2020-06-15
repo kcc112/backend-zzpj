@@ -5,7 +5,9 @@ import com.zzpj.backend.dto.AlcoholDTO;
 import com.zzpj.backend.entities.Alcohol;
 import com.zzpj.backend.entities.Warehouse;
 import com.zzpj.backend.security.MyUserDetailsService;
+import com.zzpj.backend.services.implementations.CurrencyService;
 import com.zzpj.backend.services.interfaceses.AlcoholServiceLocal;
+import com.zzpj.backend.services.interfaceses.CurrencyServiceLocal;
 import com.zzpj.backend.services.interfaceses.WarehouseServiceLocal;
 import com.zzpj.backend.utils.JwtUtil;
 
@@ -20,6 +22,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -44,6 +47,9 @@ class AlcoholControllerTest {
 
     @MockBean
     MyUserDetailsService myUserDetailsService;
+
+    @MockBean
+    CurrencyServiceLocal currencyServiceLocal;
 
     @MockBean
     JwtUtil jwtUtil;

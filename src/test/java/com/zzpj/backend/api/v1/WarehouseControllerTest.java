@@ -5,6 +5,7 @@ import com.zzpj.backend.entities.Warehouse;
 import com.zzpj.backend.exceptions.WarehouseException;
 import com.zzpj.backend.security.MyUserDetailsService;
 import com.zzpj.backend.services.implementations.WarehouseService;
+import com.zzpj.backend.services.interfaceses.CurrencyServiceLocal;
 import com.zzpj.backend.utils.JwtUtil;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -33,6 +34,9 @@ class WarehouseControllerTest {
 
     @MockBean
     MyUserDetailsService myUserDetailsService;
+
+    @MockBean
+    CurrencyServiceLocal currencyServiceLocal;
 
     @MockBean
     JwtUtil jwtUtil;

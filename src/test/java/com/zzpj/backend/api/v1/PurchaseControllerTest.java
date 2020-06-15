@@ -4,6 +4,7 @@ import com.zzpj.backend.entities.Alcohol;
 import com.zzpj.backend.entities.Purchase;
 import com.zzpj.backend.entities.User;
 import com.zzpj.backend.security.MyUserDetailsService;
+import com.zzpj.backend.services.interfaceses.CurrencyServiceLocal;
 import com.zzpj.backend.services.interfaceses.PurchaseServiceLocal;
 import com.zzpj.backend.utils.JwtUtil;
 
@@ -32,6 +33,9 @@ class PurchaseControllerTest {
 
     @MockBean
     PurchaseServiceLocal purchaseService;
+
+    @MockBean
+    CurrencyServiceLocal currencyServiceLocal;
 
     @MockBean
     MyUserDetailsService myUserDetailsService;
