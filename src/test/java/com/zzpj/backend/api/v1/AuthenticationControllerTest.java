@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zzpj.backend.dto.AuthenticationUserDTO;
 import com.zzpj.backend.dto.UserDTO;
 import com.zzpj.backend.security.MyUserDetailsService;
+import com.zzpj.backend.services.interfaceses.CurrencyServiceLocal;
 import com.zzpj.backend.services.interfaceses.UserServiceLocal;
 import com.zzpj.backend.utils.JwtUtil;
 import org.junit.jupiter.api.Assertions;
@@ -33,6 +34,9 @@ class AuthenticationControllerTest {
 
     @MockBean
     MyUserDetailsService myUserDetailsService;
+
+    @MockBean
+    CurrencyServiceLocal currencyServiceLocal;
 
     @MockBean
     JwtUtil jwtUtil;
