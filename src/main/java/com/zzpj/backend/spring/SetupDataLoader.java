@@ -64,8 +64,8 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         Role adminRole = createRoleIfNotFound("ROLE_ADMIN", adminPrivileges);
         Role userRole = createRoleIfNotFound("ROLE_USER", userPrivileges);
 
-        createUserIfNotFound("admin@edu.pl", "Mateusz", "Wasilewski", "admin", new ArrayList<Role>(Arrays.asList(adminRole)));
-        User user = createUserIfNotFound("user@edu.pl", "Szymon", "Dobrowolski", "user", new ArrayList<Role>(Arrays.asList(userRole)));
+        createUserIfNotFound("admin@edu.pl", "Mateusz", "Wasilewski", "admin", new ArrayList<>(Arrays.asList(adminRole)));
+        User user = createUserIfNotFound("user@edu.pl", "Szymon", "Dobrowolski", "user", new ArrayList<>(Arrays.asList(userRole)));
 
         Warehouse warehouse = createWarehouse(10);
 
@@ -160,7 +160,6 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         return purchaseList;
 
     }
-
 
 
 }
