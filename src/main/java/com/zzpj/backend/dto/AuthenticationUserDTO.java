@@ -2,7 +2,6 @@ package com.zzpj.backend.dto;
 
 import com.zzpj.backend.validation.ValidEmail;
 import lombok.Data;
-import org.springframework.security.core.Authentication;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;

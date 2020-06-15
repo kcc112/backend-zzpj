@@ -44,7 +44,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/registration")
-    public ResponseEntity<?> registerUserAccount(
+    public ResponseEntity<String> registerUserAccount(
             @RequestBody @Valid UserDTO userDTO) {
         try {
             userService.registerNewUserAccount(userDTO);
@@ -56,7 +56,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> createAuthenticationToken(@Valid @RequestBody AuthenticationUserDTO authenticationUserDTO)
+    public ResponseEntity<AuthenticationResponse> createAuthenticationToken(@Valid @RequestBody AuthenticationUserDTO authenticationUserDTO)
             throws Exception {
         try {
             authenticationManager.authenticate(
@@ -66,7 +66,7 @@ public class AuthenticationController {
         }
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationUserDTO.getLogin());
         final String jwt = jwtUtil.generateToken(userDetails);
-        return ResponseEntity.ok(new AuthenticationResponse(jwt));
+        return new ResponseEntity<>(new AuthenticationResponse(jwt), HttpStatus.OK);
     }
 
 }
