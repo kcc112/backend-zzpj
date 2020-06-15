@@ -18,7 +18,7 @@ public class AlcoholService implements AlcoholServiceLocal {
 
    private AlcoholRepository alcoholRepository;
 
-   @Autowired
+    @Autowired
     public AlcoholService(AlcoholRepository alcoholRepository) {
         this.alcoholRepository = alcoholRepository;
     }
