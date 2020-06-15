@@ -70,9 +70,7 @@ class AuthenticationControllerTest {
 
     @Test
     void createAuthenticationToken_whenValidInput_thenReturn200() throws Exception {
-        AuthenticationUserDTO authUserDTO = new AuthenticationUserDTO();
-        authUserDTO.setLogin("Test@wp.pl");
-        authUserDTO.setPassword("Test1234");
+        AuthenticationUserDTO authUserDTO = new AuthenticationUserDTO("Test@wp.pl", "Test1234");
 
         MvcResult mvcResult = mockMvc.perform(post("/api/v1/authentication/login")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -86,8 +84,7 @@ class AuthenticationControllerTest {
 
     @Test
     void createAuthenticationToken_whenInvalidInput_thenReturn400() throws Exception {
-        AuthenticationUserDTO authUserDTO = new AuthenticationUserDTO();
-        authUserDTO.setLogin("Test");
+        AuthenticationUserDTO authUserDTO = new AuthenticationUserDTO("Test", "");
 
         mockMvc.perform(post("/api/v1/authentication/login")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)

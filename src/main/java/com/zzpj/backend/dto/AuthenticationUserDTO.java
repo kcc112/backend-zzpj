@@ -17,8 +17,6 @@ public class AuthenticationUserDTO {
     @NotEmpty
     private String password;
 
-    public AuthenticationUserDTO() {}
-
     public AuthenticationUserDTO(String login, String password) {
         this.login = login;
         this.password = password;
