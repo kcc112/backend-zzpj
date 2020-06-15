@@ -21,31 +21,21 @@ import java.util.List;
 public class PurchaseController {
 
     private PurchaseServiceLocal purchaseService;
-    private final CurrencyServiceLocal currencyService;
 
     @Autowired
-    public PurchaseController(PurchaseServiceLocal purchaseService, CurrencyServiceLocal currencyService) {
+    public PurchaseController(PurchaseServiceLocal purchaseService) {
         this.purchaseService = purchaseService;
-        this.currencyService = currencyService;
     }
 
     @GetMapping
     public ResponseEntity<List<GetAllPurchaseDTO>> getAll() {
         List<Purchase> purchases = purchaseService.getAllPurchases();
-        purchases.forEach(
-                x -> x.getPurchaseLists()
-                        .forEach(y -> y.getAlcohol()
-                            .setCost(currencyService.convertCurrencies(y.getAlcohol().getCost(), "USD", "PLN"))));
         return new ResponseEntity<>(PurchaseGetAllMapper.getAllPurchaseDTO(purchases), HttpStatus.OK);
     }
 
     @GetMapping("user/{login}")
     public ResponseEntity<List<GetAllPurchaseDTO>> getAllThisUser(@PathVariable String login) {
         List<Purchase> purchases = purchaseService.getAllUserPurchases(login);
-        purchases.forEach(
-                x -> x.getPurchaseLists()
-                        .forEach(y -> y.getAlcohol()
-                                .setCost(currencyService.convertCurrencies(y.getAlcohol().getCost(), "USD", "PLN"))));
         return new ResponseEntity<>(PurchaseGetAllMapper.getAllPurchaseDTO(purchases), HttpStatus.OK);
     }
 

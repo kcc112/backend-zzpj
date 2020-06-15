@@ -11,6 +11,7 @@ import com.zzpj.backend.services.interfaceses.AlcoholServiceLocal;
 import com.zzpj.backend.services.interfaceses.CurrencyServiceLocal;
 import com.zzpj.backend.services.interfaceses.WarehouseServiceLocal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,27 +27,22 @@ public class AlcoholController {
 
     private final AlcoholServiceLocal alcoholService;
     private final WarehouseServiceLocal warehouseService;
-    private final CurrencyServiceLocal currencyService;
 
     @Autowired
-    public AlcoholController(AlcoholServiceLocal alcoholService,
-                             WarehouseServiceLocal warehouseService, CurrencyServiceLocal currencyService) {
+    public AlcoholController(@Qualifier("alcoholServiceWithCurrencies")AlcoholServiceLocal alcoholService, WarehouseServiceLocal warehouseService) {
         this.alcoholService = alcoholService;
         this.warehouseService = warehouseService;
-        this.currencyService = currencyService;
     }
 
     @GetMapping
     public ResponseEntity<List<Alcohol>> getAll() {
         List<Alcohol> alcohols = alcoholService.getAllAlcohols();
-        alcohols.forEach(x -> x.setCost(currencyService.convertCurrencies(x.getCost(),"USD", "PLN")));
         return new ResponseEntity<>(alcohols, HttpStatus.OK);
     }
 
     @GetMapping("{id}")
     public ResponseEntity<Alcohol> get(@PathVariable UUID id) {
         Optional<Alcohol> alcohol = alcoholService.getAlcohol(id);
-        alcohol.ifPresent(x -> x.setCost(currencyService.convertCurrencies(x.getCost(), "USD", "PLN")));
         return new ResponseEntity<>(alcohol.orElseGet(Alcohol::new), HttpStatus.OK);
     }
 
@@ -60,7 +56,6 @@ public class AlcoholController {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
             alcohol.setWarehouse(warehouseFromDB.get());
-            alcohol.setCost(currencyService.convertCurrencies(alcohol.getCost(), "PLN", "USD"));
             alcoholService.addAlcohol(alcohol);
         } catch (AlcoholException e) {
           if (e.getMessage().contains(AlcoholException.ALCOHOL_WITH_GIVEN_NAME_EXIST)) {
@@ -77,7 +72,6 @@ public class AlcoholController {
         Alcohol alcohol = AlcoholMapper.mapAlcoholDTOToAlcohol(alcoholDTO);
         try {
             if (alcohol.getUuid() != null) throw new AppBaseException("Invalid data");
-            alcohol.setCost(currencyService.convertCurrencies(alcohol.getCost(), "PLN", "USD"));
             alcoholService.editAlcohol(alcohol);
         } catch (AppBaseException e) {
             return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
