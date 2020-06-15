@@ -7,6 +7,7 @@ import com.zzpj.backend.exceptions.AppBaseException;
 import com.zzpj.backend.services.interfaceses.UserServiceLocal;
 import com.zzpj.backend.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,6 +29,7 @@ public class AuthenticationController {
 
     private AuthenticationManager authenticationManager;
 
+    @Qualifier("myUserDetailsService")
     private UserDetailsService userDetailsService;
 
     private JwtUtil jwtUtil;
