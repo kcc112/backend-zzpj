@@ -2,6 +2,7 @@ package com.zzpj.backend.spring;
 
 import com.zzpj.backend.entities.*;
 import com.zzpj.backend.repositories.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -34,6 +35,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
     public SetupDataLoader(UserRepository userRepository, WarehouseRepository warehouseRepository,
                            RoleRepository roleRepository, PrivilegeRepository privilegeRepository,
                            AlcoholRepository alcoholRepository, PurchaseRepository purchaseRepository,
@@ -62,7 +64,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         Role adminRole = createRoleIfNotFound("ROLE_ADMIN", adminPrivileges);
         Role userRole = createRoleIfNotFound("ROLE_USER", userPrivileges);
 
-        User admin = createUserIfNotFound("admin@edu.pl", "Mateusz", "Wasilewski", "admin", new ArrayList<Role>(Arrays.asList(adminRole)));
+        createUserIfNotFound("admin@edu.pl", "Mateusz", "Wasilewski", "admin", new ArrayList<Role>(Arrays.asList(adminRole)));
         User user = createUserIfNotFound("user@edu.pl", "Szymon", "Dobrowolski", "user", new ArrayList<Role>(Arrays.asList(userRole)));
 
         Warehouse warehouse = createWarehouse(10);
@@ -71,7 +73,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
         Purchase purchase = createPurchase(user);
 
-        PurchaseList purchaseList = createPurchaseListIfNotFound(taterka, 3, purchase);
+        createPurchaseListIfNotFound(taterka, 3, purchase);
 
 
         alreadySetup = true;

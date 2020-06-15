@@ -4,6 +4,7 @@ import com.zzpj.backend.dto.AuthenticationResponse;
 import com.zzpj.backend.dto.AuthenticationUserDTO;
 import com.zzpj.backend.dto.UserDTO;
 import com.zzpj.backend.exceptions.AppBaseException;
+import com.zzpj.backend.exceptions.UserException;
 import com.zzpj.backend.services.interfaceses.UserServiceLocal;
 import com.zzpj.backend.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.security.auth.login.AccountException;
 import javax.validation.Valid;
 
 @RestController
@@ -56,13 +58,13 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> createAuthenticationToken(@Valid @RequestBody AuthenticationUserDTO authenticationUserDTO)
-            throws Exception {
+    public ResponseEntity<AuthenticationResponse> createAuthenticationToken(@Valid @RequestBody AuthenticationUserDTO authenticationUserDTO) {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authenticationUserDTO.getLogin(), authenticationUserDTO.getPassword()));
         } catch (BadCredentialsException e) {
-            throw new Exception("Incorrect username or password", e);
+            throw new ResponseStatusException(
+                    HttpStatus.UNAUTHORIZED, UserException.createExceptionIncorrectCredentials(e).getMessage(), UserException.createExceptionIncorrectCredentials(e));
         }
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationUserDTO.getLogin());
         final String jwt = jwtUtil.generateToken(userDetails);
