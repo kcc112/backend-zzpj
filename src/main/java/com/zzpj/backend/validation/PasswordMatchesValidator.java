@@ -9,6 +9,7 @@ public class PasswordMatchesValidator implements ConstraintValidator<PasswordMat
 
     @Override
     public void initialize(PasswordMatches constraintAnnotation) {
+        //The default implementation is a no-op.
     }
 
     @Override

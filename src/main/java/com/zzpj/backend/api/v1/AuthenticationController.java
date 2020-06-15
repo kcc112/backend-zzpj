@@ -4,6 +4,7 @@ import com.zzpj.backend.dto.AuthenticationResponse;
 import com.zzpj.backend.dto.AuthenticationUserDTO;
 import com.zzpj.backend.dto.UserDTO;
 import com.zzpj.backend.exceptions.AppBaseException;
+import com.zzpj.backend.exceptions.UserException;
 import com.zzpj.backend.services.interfaceses.UserServiceLocal;
 import com.zzpj.backend.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/registration")
-    public String registerUserAccount(
+    public ResponseEntity<String> registerUserAccount(
             @RequestBody @Valid UserDTO userDTO) {
         try {
             userService.registerNewUserAccount(userDTO);
@@ -52,21 +53,21 @@ public class AuthenticationController {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, exc.getMessage(), exc);
         }
-        return "Success";
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> createAuthenticationToken(@Valid @RequestBody AuthenticationUserDTO authenticationUserDTO)
-            throws Exception {
+    public ResponseEntity<AuthenticationResponse> createAuthenticationToken(@Valid @RequestBody AuthenticationUserDTO authenticationUserDTO) {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authenticationUserDTO.getLogin(), authenticationUserDTO.getPassword()));
         } catch (BadCredentialsException e) {
-            throw new Exception("Incorrect username or password", e);
+            throw new ResponseStatusException(
+                    HttpStatus.UNAUTHORIZED, UserException.createExceptionIncorrectCredentials(e).getMessage(), UserException.createExceptionIncorrectCredentials(e));
         }
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationUserDTO.getLogin());
         final String jwt = jwtUtil.generateToken(userDetails);
-        return ResponseEntity.ok(new AuthenticationResponse(jwt));
+        return new ResponseEntity<>(new AuthenticationResponse(jwt), HttpStatus.OK);
     }
 
 }

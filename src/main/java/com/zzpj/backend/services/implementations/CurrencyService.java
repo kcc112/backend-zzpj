@@ -19,6 +19,7 @@ public class CurrencyService implements CurrencyServiceLocal {
                 .getForObject("https://free.currconv.com/api/v7/convert?apiKey=41aa626d07e4c675953e&compact=ultra&q={from}_{to}",
                         Map.class,
                         from, to);
+
         return result.get(from + "_" + to) * value;
     }
 }

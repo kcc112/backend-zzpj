@@ -19,6 +19,7 @@ import java.util.List;
 @RequestMapping("/api/v1/purchases")
 public class PurchaseController {
 
+
     private final PurchaseServiceLocal purchaseService;
 
     @Autowired

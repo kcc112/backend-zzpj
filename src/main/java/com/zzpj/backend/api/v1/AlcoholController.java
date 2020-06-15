@@ -8,7 +8,6 @@ import com.zzpj.backend.exceptions.AlcoholException;
 import com.zzpj.backend.exceptions.AppBaseException;
 import com.zzpj.backend.mappers.AlcoholMapper;
 import com.zzpj.backend.services.interfaceses.AlcoholServiceLocal;
-import com.zzpj.backend.services.interfaceses.CurrencyServiceLocal;
 import com.zzpj.backend.services.interfaceses.WarehouseServiceLocal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
