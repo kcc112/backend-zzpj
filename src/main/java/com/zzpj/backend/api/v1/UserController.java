@@ -41,7 +41,7 @@ public class UserController {
         UserMapper userMapper = new UserMapper();
         User user = userMapper.mapUserDTOToUser(userDto);
         try {
-            if (user.getLogin() != null) throw new AppBaseException("Invalid data");
+            if (user.getLogin().isEmpty()) throw new AppBaseException("Invalid data");
             userService.editUser(user);
         } catch (AppBaseException e) {
             return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
