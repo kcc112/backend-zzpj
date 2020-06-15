@@ -6,6 +6,7 @@ import com.zzpj.backend.services.interfaceses.AlcoholServiceLocal;
 import com.zzpj.backend.services.interfaceses.CurrencyServiceLocal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,8 +19,12 @@ public class AlcoholServiceDecorator implements AlcoholServiceLocal {
 
     final private AlcoholServiceLocal alcoholService;
     final private CurrencyServiceLocal currencyService;
-    private String serverCurrency = "USD";
-    private String clientCurrency = "PLN";
+
+    @Value("${application.currency.base}")
+    private String serverCurrency;
+
+    @Value("${application.currency.local}")
+    private String clientCurrency;
 
     @Autowired
     public AlcoholServiceDecorator(AlcoholServiceLocal alcoholService, CurrencyServiceLocal currencyService) {
